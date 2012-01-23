@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : CSS Compression</title>
+
+<style type='text/css' media='all'>@import url('../../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;    
+<a href="../assets.html">Asset Library</a> &nbsp;&#8250;&nbsp;  
+CSS Compression
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>CSS Compression</h1>
+<p>The <a href="../assets.html">Asset Library</a> comes with the ability to compress 
+and optimise your CSS code. The plugin called <a href="http://csstidy.sourceforge.net/">CSSTidy</a> is used to perform the actual 
+optimisation.</p>
+<p>That big advantage of running css compression on your asset files is it means they will be smaller 
+thus meaning quicker to download for your users.</p>
+
+<p class="important"><strong>Note</strong>: CSS compression and optimisation does not alter your asset files 
+on the server, it only effects the <kbd>cached</kbd> copies.</p>
+
+<h2>Requirements</h2>
+<ol>
+	<li><strong>Turn on Asset Optimisation:</strong><br/>
+	<p>You must turn on asset optimisation for the asset library, more details can be found on the <a href="asset_optimisation.html">Asset Optimisation</a> page.</p></li>
+
+	<li><strong>Setup CSSTidy:</strong><br/>
+		<ol>
+			<li>Download the latest version of the CSSTidy plugin from the <a href="http://csstidy.sourceforge.net/download.php">downloads page</a>.</li>
+			<li>Extract the zip contents to <dfn>modules/site/plugins/csstidy/</dfn>.</li>
+			<li>Open the <dfn>modules/site/config/bep_assets.php</dfn> config file, find and set the following key (it is located near the bottom):
+			<code>$config['csstidy']['path'] = BASEPATH . "../modules/site/plugins/csstidy/class.csstidy.php";</code></li>
+		</ol>
+	</li>
+</ol>
+<p>Now when a user visits the website the css files will be compressed and stored.</p>
+
+<h2>Configuration</h2>
+<p>There are several configuration options for the CSSTidy plugin, these can be set in <dfn>modules/site/config/bep_assets.php</dfn>.</p>
+
+<table cellpadding="0" cellspacing="1" border="0" style="width:100%" class="tableborder">
+<tr>
+	<th>Preference</th>
+	<th>Default&nbsp;Value</th>
+	<th>Options</th>
+	<th>Description</th>
+</tr>
+<tr>
+	<td class="td"><strong>template</strong></td>
+	<td class="td">highest_compression</td>
+	<td class="td">highest_compression<br/>high_compression<br/>low_compression<br/>default</td>
+	<td class="td">The template sets what level of compression to perform on CSS files.</td>
+</tr>
+<tr>
+	<td class="td"><strong>discard_invalid_properties</strong></td>
+	<td class="td">FALSE</td>
+	<td class="td">bool</td>
+	<td class="td">Setting this to true will remove any invalid CSS expressions from the output.</td>
+</tr>
+<tr>
+	<td class="td"><strong>compress_colors</strong></td>
+	<td class="td">TRUE</td>
+	<td class="td">bool</td>
+	<td class="td">Whether to compress CSS colours to their shortest format, e.g. white goes to #fff</td>
+</tr>
+<tr>
+	<td class="td"><strong>compress_font-weight</strong></td>
+	<td class="td">TRUE</td>
+	<td class="td">bool</td>
+	<td class="td">Whether to compress CSS font-weights to their shortest format, e.g. bold goes to 600</td>
+</tr>
+<tr>
+	<td class="td"><strong>lowercase_s</strong></td>
+	<td class="td">FALSE</td>
+	<td class="td">bool</td>
+	<td class="td">Lowercase element names needed for XHTML</td>
+</tr>
+<tr>
+	<td class="td"><strong>optimise_shorthands</strong></td>
+	<td class="td">1</td>
+	<td class="td">0 - Don't<br/>1 - Safe Optimisations<br/>2 - All</td>
+	<td class="td">Compresses shorthand values. Example: margin:1px 1px 1px 1px -> margin:1px</td>
+</tr>
+<tr>
+	<td class="td"><strong>remove_bslash</strong></td>
+	<td class="td">TRUE</td>
+	<td class="td">bool</td>
+	<td class="td">Remove unnecessary backslashes</td>
+</tr>
+<tr>
+	<td class="td"><strong>remove_last_;</strong></td>
+	<td class="td">TRUE</td>
+	<td class="td">bool</td>
+	<td class="td">Removes last semi-colon. Example: a{color:red;} -&gt; a{color:red}</td>
+</tr>
+<tr>
+	<td class="td"><strong>case_properties</strong></td>
+	<td class="td">1</td>
+	<td class="td">0 - None<br/>1 - Lowercase<br/>2 - Uppercase</td>
+	<td class="td">Case for properties</td>
+</tr>
+<tr>
+	<td class="td"><strong>sort_properties</strong></td>
+	<td class="td">FALSE</td>
+	<td class="td">bool</td>
+	<td class="td">Sort your CSS properties.</td>
+</tr>
+<tr>
+	<td class="td"><strong>sort_selectors</strong></td>
+	<td class="td">FALSE</td>
+	<td class="td">bool</td>
+	<td class="td">Sort your CSS selectors, <kbd>Attention: This may change the behaviour of your CSS Code!</kbd></td>
+</tr>
+<tr>
+	<td class="td"><strong>merge_selectors</strong></td>
+	<td class="td">2</td>
+	<td class="td">0 - Do Not<br/>1 - Only separate selectors (split at ,)<br/>2 - Merge selectors with the same properties</td>
+	<td class="td">Merges selectors with same properties. Example: a{color:red} b{color:red} -&gt; a,b{color:red}</td>
+</tr>
+<tr>
+	<td class="td"><strong>css_level</strong></td>
+	<td class="td">CSS2.1</td>
+	<td class="td">CSS1.0<br/>CSS2.0<br/>CSS2.1</td>
+	<td class="td">Discard invalid properties if they do not match the selected version.</td>
+</tr>
+<tr>
+	<td class="td"><strong>preserve_css</strong></td>
+	<td class="td">FALSE</td>
+	<td class="td">bool</td>
+	<td class="td">Save comments, hacks, etc. Most optimisations can <strong>not</strong> be applied if this is enabled.</td>
+</tr>
+<tr>
+	<td class="td"><strong>timestamp</strong></td>
+	<td class="td">FALSE</td>
+	<td class="td">bool</td>
+	<td class="td">Add a timestamp to the output.</td>
+</tr>
+</table>
+
+
+</div>
+<!-- END CONTENT -->
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

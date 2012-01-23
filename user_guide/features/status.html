@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Status Class</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;  
+Status Class
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Status Class</h1>
+
+<p>The Status Class implements a clean simple way to display messages to the user 
+after a page load.</p>
+
+<p class="important"><strong>Note:</strong>&nbsp; This class is initialized automatically by the system so there is no need to do it manually.</p>
+
+<h2>Status Class Function Reference</h2>
+
+<a name="flashmsg"></a>
+<h3>flashMsg()</h3>
+<p>Create new message:</p>
+<code>flashMsg('<var>type</var>','<var>message</var>')</code>
+<p>The first parameter <var>type</var> specifies what type the message should be. 
+It can be any of the following, <kbd>info</kbd>, <kbd>success</kbd>, <kbd>warning</kbd> &amp; <kbd>error</kbd>.</p>
+<p>The second parameter <var>message</var> is the message you want to display to the user.</p>   
+
+<a name="displaystatus"></a>
+<h3>displayStatus()</h3>   
+<p>Display stored messages:</p>
+<code>displayStatus('<var>type</var>')</code>
+<p>The first <strong>optional</strong> parameter specifys what type of error message 
+you want to output. It can take several values, <kbd>info</kbd>, <kbd>success</kbd>, <kbd>warning</kbd> &amp; <kbd>error</kbd>.
+As said, it is optional, if no type is given all error message types will be outputted.</p>   
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

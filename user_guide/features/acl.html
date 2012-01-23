@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Access Control</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;    
+Access Control
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Access Control</h1>
+
+<p><strong>BackendPro</strong> comes with an advanced access control system unlike most other applications. It uses access control lists 
+to control group access to resources. If you do not know what access control lists are read <a href="http://en.wikipedia.org/wiki/Access_control_list">this Wiki</a> page. 
+There are two systems used for <strong>BackendPro</strong>, there is the front end management system, and there 
+is the backend system provided by <a href="http://codeigniter.com/forums/viewthread/70197/">KhACL</a> and a <a href="../models/nested_sets_model.html">Nested Sets Model</a>. 
+It is not required to fully understand these systems to use <strong>BackendPro</strong> but you may find them interesting.</p>
+
+<p class="important"><strong>Note:</strong>&nbsp; Access Control is initialized automatically by the system so there is no need to do it manually.</p>
+  
+<p>Features:</p>
+
+<ul>
+    <li>Allows user groups to be created</li>
+    <li>Provides facilities to create resources and restrict access to them upon a group basis</li>
+    <li>Allows 'actions' to be created to increase the complexity of the security</li>
+</ul>
+
+<p class="important"><strong>Important:</strong>&nbsp; DO NOT DELETE PERMISSIONS UNLESS YOU FULLY UNDERSTAND WHAT THE REPERCUSSION WILL HAVE 
+ON YOUR SYSTEM. IN DOING SO YOU COULD LOCK YOURSELF OUT OF YOUR SYSTEM. YOU HAVE BEEN WARNED.</p>
+
+<h2>Restricting Access to a Controller/Method</h2>
+<p>As stated above access is determined on a group basis for certain resources. To make sure a 
+user has sufficient permission to access a page all you need is a simple function call.</p>
+
+<code>check(<var>resource</var>,<var>action</var>,<var>redirect</var>);</code>
+
+<p>The first parameter <var>resource</var> denotes the resource name which will guard this controller/method. Examples 
+of such names can be seen in the <kbd>Default Resources</kbd> section.</p>
+
+<p>The second <strong>optional</strong> parameter denotes an <var>action</var>, which the user must also 
+have access to on the specified <var>resource</var> to be allowed to view the page.</p>
+
+<p>The third <strong>optional</strong> parameter if set to FALSE will instead of redirecting them 
+to a warning page informing them of their insufficient access, will just return FALSE. Now this can 
+be useful say if you only want to show them a link to a page if they have access to it, otherwise they 
+will not be shown the link.</p>
+
+<p>Lets look at some examples:</p>
+<code>
+//&nbsp;This&nbsp;line&nbsp;will&nbsp;check&nbsp;the&nbsp;user&nbsp;has&nbsp;access&nbsp;to&nbsp;the&nbsp;settings&nbsp;resource.&nbsp;If&nbsp;they&nbsp;do&nbsp;<br />
+//&nbsp;not&nbsp;then&nbsp;it&nbsp;will&nbsp;redirect&nbsp;them&nbsp;away&nbsp;from&nbsp;the&nbsp;page&nbsp;and&nbsp;display&nbsp;and&nbsp;error&nbsp;message.<br />
+check(<var>'Settings'</var>);<br />
+<br />
+//&nbsp;This&nbsp;line&nbsp;will&nbsp;check&nbsp;the&nbsp;user&nbsp;has&nbsp;permission&nbsp;to&nbsp;use&nbsp;the&nbsp;delete&nbsp;action&nbsp;on&nbsp;the&nbsp;members&nbsp;<br />
+//&nbsp;resource.&nbsp;If&nbsp;they&nbsp;do&nbsp;not,&nbsp;it&nbsp;will&nbsp;redirect&nbsp;them.<br />
+check(<var>'Members'</var>,<var>'Delete'</var>);<br />
+<br />
+//&nbsp;These&nbsp;several&nbsp;lines&nbsp;will&nbsp;check&nbsp;the&nbsp;user&nbsp;has&nbsp;access&nbsp;to&nbsp;the&nbsp;members&nbsp;resource.&nbsp;But&nbsp;<br />
+//&nbsp;if&nbsp;they&nbsp;do&nbsp;not&nbsp;instead&nbsp;of&nbsp;redirecting&nbsp;them&nbsp;it&nbsp;will&nbsp;return&nbsp;FALSE.&nbsp;Therefore&nbsp;only&nbsp;<br />
+//&nbsp;if&nbsp;they&nbsp;have&nbsp;access&nbsp;will&nbsp;the&nbsp;link&nbsp;be&nbsp;created.<br />
+if(&nbsp;check(<var>'Members'</var>,NULL,<var>FALSE</var>))<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;anchor('auth/admin/members','Members');<br />
+}
+</code>
+
+<h2>Managing Permissions and Access</h2>
+<p>From the many systems I looked at, I found it very difficult to be able to know 
+what permissions had an affect on what groups. For this reason I created a very simple tool, which 
+when used you can query the system and see exactly what access rights a user has.</p>
+<center><img src="../images/acl_advanced_view.jpg" /></center>
+<p>As you can see in the screenshot above, by selecting what group you want to query you
+can straight away see what resources they have access to.</p>
+
+<h2>Default User Groups</h2>
+<p>By default <strong>BackendPro</strong> comes with several user groups pre-created for you. 
+You cannot delete these due to them having a possible effects on the system. The items in the table 
+are intended to show how they are nested in the system.</p>
+
+<table cellpadding="0" cellspacing="1" border="0" style="width:100%" class="tableborder">
+<tr>
+    <th>Group</th>
+    <th>Description</th>    
+</tr>
+<tr>
+    <td class="td"><strong>Member</strong></td>
+    <td class="td">This is the root node of the group tree, all website members will inherit from this group.</td>
+</tr>
+<tr>
+    <td class="td"><strong>&nbsp;&nbsp;Administrator</strong></td>
+    <td class="td">This is the basic group for administrators.</td>
+</tr>
+</table>
+
+<h2>Default Resource</h2>
+<p>By default <strong>BackendPro</strong> comes with several resources pre-created for you. 
+You cannot delete these since they provide the basic access to the control panel. The items in the table 
+are intended to show how they are nested in the system.</p>
+
+<table cellpadding="0" cellspacing="1" border="0" style="width:100%" class="tableborder">
+<tr>
+    <th>Resource</th>
+    <th>Description</th>    
+</tr>
+<tr>
+    <td class="td"><strong>Site</strong></td>
+    <td class="td">This is the root node of the resource tree, all other website resource will stem from this resource.</td>
+</tr>
+<tr>
+    <td class="td"><strong>&nbsp;&nbsp;Control Panel</strong></td>
+    <td class="td">This resource guards access to the website control panel.</td>
+</tr>
+<tr>
+    <td class="td"><strong>&nbsp;&nbsp;&nbsp;&nbsp;System</strong></td>
+    <td class="td">This resource guards access to all system pages included Members/Settings/Utilities/Access Control.</td>
+</tr>
+<tr>
+    <td class="td"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Settings</strong></td>
+    <td class="td">This resource guards access to the website settings page.</td>
+</tr>
+<tr>
+    <td class="td"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Members</strong></td>
+    <td class="td">This resource guards access to the member administration page.</td>
+</tr>
+<tr>
+    <td class="td"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Utilities</strong></td>
+    <td class="td">This resource guards access to the website utilities page.</td>
+</tr>
+<tr>
+    <td class="td"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access Control</strong></td>
+    <td class="td">This resource guards access to the access control management page.</td>
+</tr>
+<tr>
+    <td class="td"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Actions</strong></td>
+    <td class="td">This resource guards access to the page allowing administration of the websites actions.</td>
+</tr>
+<tr>
+    <td class="td"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Groups</strong></td>
+    <td class="td">This resource guards access to the page allowing administration of the websites groups.</td>
+</tr>
+<tr>
+    <td class="td"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Resources</strong></td>
+    <td class="td">This resource guards access to the page allowing administration of the websites resources.</td>
+</tr>
+<tr>
+    <td class="td"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Permissions</strong></td>
+    <td class="td">This resource guards access to the page allowing administration of the websites permissions.</td>
+</tr>
+</table>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

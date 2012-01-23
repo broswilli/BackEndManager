@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : CSS Styles</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;   
+CSS Styles
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>CSS Styles</h1>
+
+<p>When creating administration control panel styles its common to use several main features. 
+Forms, tables and links. For this reason I have created several different styles which 
+can be used to create basic but pleasing looks for your control panel.</p>
+
+<p class="important"><strong>Note:</strong>&nbsp; All styles discussed on this page are loaded by default by BackendPro by the <a href="../features/page.html">Page</a> class.</p>
+
+<a name="forms"></a>
+<h2>Forms</h2>
+<p>Since forms are used for nearly all UI there is a simple standard which I have 
+used throughout <strong>BackendPro</strong>. It provides using the same html code for both vertical &
+horizontal forms to be created. The basic form html you would use is as follows:</p>
+
+<code>
+&lt;form&nbsp;class=&quot;<var>form_type</var>&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;fieldset&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ol&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;label&nbsp;for=&quot;inpText&quot;&gt;Label&nbsp;Text:&lt;/label&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;type=&quot;text&quot;&nbsp;name=&quot;inpText&quot;&nbsp;<dfn>class=&quot;text&quot;</dfn>&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/li&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&nbsp;<dfn>class=&quot;submit&quot;</dfn>&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;type=&quot;submit&quot;&nbsp;name=&quot;submit&quot;&nbsp;value=&quot;Save&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/li&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ol&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/fieldset&gt;<br />
+&lt;/form&gt;
+</code>
+
+<p>From the code above you can see that forms are created using the <strong>ol</strong>
+html element. Each row being a new <strong>li</strong>. <var>form_type</var> can take 
+one of two values, <dfn>horizontal</dfn> or <dfn>vertical</dfn>. This specifies
+what orientation you would like the form to be in.</p>
+
+<p>Further down the form you see a <kbd>class</kbd> applied to an input, all this class
+does is make the text input the same size as a select box and text area, It isn't
+necessary to use it.</p>
+
+<p>The final <strong>li</strong> in the form has a class of value <kbd>submit</kbd>, this
+tells the form when in <dfn>horizontal</dfn> mode to indent the submit button so it lines up with the
+other form elements. To create 'pretty' buttons please see <a href="#icon_buttons">Icon Buttons</a>.</p>
+
+<p class="important"><strong>Note:</strong>&nbsp; For full details of the form styles please see <kbd>assets/shared/css/forms.css</kbd>.</p>  
+
+<!--<h2>Data Grid</h2>
+
+<p>BackendPro dosn't provide automated CRUD support so instead to try and make your
+life a little bit easiyer I have provided a nice but simple table style used to display
+tabular data.</p>
+
+<p class="important"><strong>Note:</strong>&nbsp; For full details of what the data grid styles please see <kbd>assets/shared/css/forms.css</kbd>.</p>  
+-->
+
+<a name="icon_links"></a>
+<h2>Icon Links</h2>
+<p>Throughout <strong>BackendPro</strong> you will see links with an icons next to them. These are controlled by
+a PHP generated stylesheet located at <kbd>assets/shared/css/icons.php</kbd>.</p>
+
+<p>Every icon stored in <kbd>assets/shared/icons</kbd> has the css code created automatically so it can be used as 
+a link icon, all you need to do is use the format below:</p>
+
+<code>&lt;a&nbsp;href=&quot;location&quot;&nbsp;class=&quot;icon_<var>name</var>&quot;&gt;Some&nbsp;Link&lt;/a&gt;</code>
+
+<p>Where <var>name</var> is the name of the icon file you want to display next to the link, excluding the extension.</p>
+
+
+<a name="icon_buttons"></a>
+<h2>Icon Buttons</h2>
+<p><strong>BackendPro</strong> offers a simple but stylish method to create buttons using the HTML <dfn>&lt;button&gt;</dfn>
+tag. Instead of creating boring bland buttons you can add interesting icons to aid the user.</p>
+
+<p>Example Button Code:</p>
+<code>
+&lt;div&nbsp;class=&quot;buttons&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;button&nbsp;type=&quot;submit&quot;&nbsp;class=&quot;positive&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&lt;?=&nbsp;$this-&gt;page-&gt;icon('disk');?&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Submit<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href=&quot;#&quot;&nbsp;class=&quot;negative&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&lt;?=&nbsp;$this-&gt;page-&gt;icon('cross');?&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Cancel<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href=&quot;#&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&lt;?=&nbsp;$this-&gt;page-&gt;icon('key');?&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Change&nbsp;Password<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;<br />
+&lt;/div&gt;
+</code>
+
+<p>As you can see in the example above, 3 buttons are created. You can either create them using the <dfn>&lt;button&gt;</dfn>
+tag or using an <dfn>&lt;a&gt;</dfn> tag. By applying a class of either <var>positive/negative</var> it will colour the button green/red respectivily.
+Not specifying a class results in a neutral button.</p>
+
+<p>As you can see in the example above, <dfn>$this-&gt;page-&gt;icon('cross');</dfn> has been used to include an icon image. For 
+more information of this function please consult the <a href="../features/page.html#icon">Page</a> library.</p>
+
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

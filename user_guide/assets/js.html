@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Javascript</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;   
+Javascript
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Javascript</h1>
+
+<p>Throughout <strong>BackendPro</strong> there are simple scripts used to provide the user with added functionality.</p>
+
+<p class="important"><strong>Note:</strong>&nbsp; All scripts discussed on this page are loaded by default by BackendPro by the <a href="../features/page.html">Page</a> class.</p>
+
+<h2>Multiple Check Checkboxes</h2>
+
+<p>Throughout <strong>BackendPro</strong> checkboxes are used so multiple items can be selected and an 
+action performed on those actions. To make the job simpler for a user wanting to 
+select all the items, its possible to create a checkbox which when checked will check 
+all checkboxes related to it. To use this you don't need any javascript, you just 
+need to setup the checkboxes in a specific way:</p>
+
+<code>
+&lt;form&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;type=&quot;checkbox&quot;&nbsp;name=&quot;<kbd>all</kbd>&quot;&nbsp;value=&quot;<kbd>myCheckbox</kbd>&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;type=&quot;checkbox&quot;&nbsp;name=&quot;myCheckbox[]&quot;&nbsp;value=&quot;1&quot;&gt;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;type=&quot;checkbox&quot;&nbsp;name=&quot;myCheckbox[]&quot;&nbsp;value=&quot;3&quot;&gt;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;type=&quot;checkbox&quot;&nbsp;name=&quot;myCheckbox[]&quot;&nbsp;value=&quot;2&quot;&gt;&nbsp;<br />
+&lt;/form&gt;
+</code>
+
+<p>As you can see from the above example, there is a checkbox at the top called <kbd>all</kbd>.
+This has a value equal to the checkboxes it has control over. Its really that simple.</p>
+  
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

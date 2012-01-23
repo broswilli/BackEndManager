@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Views</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;    
+Views
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Views</h1>
+
+<p>CodeIgniter provides a very clever way to <a href="http://codeigniter.com/user_guide/general/views.html">load views</a> from a controller 
+and pass data into them to be displayed. Since <strong>BackendPro</strong> provides you the developer 
+with a pre-built administration area I had to take decisions on how to handle the views for the applications.</p>
+
+<p>Views should always be separated into two different folders inside the main views folder, <kbd>admin</kbd> 
+and <kbd>public</kbd>. The reason for this is not only does it provide a nice way for you to 
+separate the different files but also means my inbuilt data output process can be used.</p>
+
+<h2>Containers</h2>
+<p>Since <strong>BackendPro</strong> tries to use modular code as much as possible I wanted 
+the same header/footer code to be used for all pages and just therefore change the content of 
+the page. To do this I implemented a container system. What this is is instead of calling a 
+single view file, you call a <strong>master</strong> view file which then goes and loads 
+its respective headers and footers etc.</p>
+
+<h3>Container</h3>
+<p>When you extend either of the <a href="../controllers/admin_controller.html">Admin Controller</a> or 
+the <a href="../controllers/public_controller.html">Public Controller</a> a class variable is inherited 
+which you can only access by using <dfn>$this-&gt;_container</dfn>. This variable 
+is the <strong>container</strong> view file I was talking about for the respective Controller class.</p>
+
+<p>The master view files and their children view files are located in <var>system/application/views/admin</var> 
+and <var>system/application/views/public</var> respectively.</p>
+
+<a name="popup_container"></a>
+<h3>Popup Container</h3>
+<p class="important"><strong>Note:</strong> This feature is only available when extending an <a href="../controllers/admin_controller.html">Admin Controller</a>.</p>
+<p>There may be times when instead of re-directing the user to a whole new page, you just want to open a popup, but 
+with all the styles of the main window and with all the normal container features. This is where a popup container 
+comes in. By using the <dfn>$this-&gt;_popup_container</dfn> variable you can load all your custom views into a window 
+which doesn't have the default admin navigation/header/footer.</p>
+
+<h2>Possible Page Content</h2>
+<p>As said above, I wanted to design a system so content could be passed into a 
+default view file and it would work, for this reason there is three ways to add content 
+to a page. In all three a <var>header</var> variable is set. This sets the text to be displayed 
+in the title bar of the browser.</p>
+<ol>
+    <li><strong>Basic plain text</strong><br />
+    If you just want to display some text and don't require to load a view you can simple 
+    pass a string to the <strong>master</strong> container.
+    <code>
+    function&nbsp;index()<br />
+    {<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;$data['header']&nbsp;=&nbsp;&quot;My&nbsp;Page&quot;;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;$data['<kbd>content</kbd>']&nbsp;=&nbsp;&quot;Just&nbsp;displays&nbsp;some&nbsp;basic&nbsp;text,&nbsp;nothing&nbsp;more&quot;;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;load-&gt;view(<kbd>$this-&gt;_container</kbd>,$data);<br />
+    }
+    </code>
+    <p>As you can see in the example above, instead of calling a view file I tell it 
+    to load the file defined by <dfn>$this-&gt;_container</dfn>. The text string 
+    is passed as input using the <kbd>content</kbd> variable entry.
+    </li>
+    
+    <li><strong>View File</strong><br />
+    <p>For the times when you want to load a more complex page, passing the data by 
+    string can get confusing and messy. For this reason you can specify a <kbd>page</kbd> to load in 
+    its place (read page as view file).</p>
+    <code>
+    function&nbsp;index()<br />
+    {<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;$data['header']&nbsp;=&nbsp;&quot;My&nbsp;Page&quot;;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;$data['<kbd>page</kbd>']&nbsp;=&nbsp;<dfn>$this-&gt;config-&gt;item('backendpro_template_admin')</dfn>&nbsp;.&nbsp;&quot;<kbd>my_view_file</kbd>&quot;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;load-&gt;view($this-&gt;_container,$data);<br />
+    }
+    </code>
+    <p>In the above example you will see I specify a <kbd>page</kbd> to load.
+    So in this example it will load the view file <var>system/application/</var><dfn>view/admin/</dfn><kbd>my_view_file.php</kbd>.</p> 
+    </li>
+    
+    <li><strong>View File in a Module</strong><br />
+    <p>This case is exactly the same as that above apart from due to the way matchbox 
+    is setup you must specify what module you want to load the view file from. For this 
+    reason we pass one more value into the <strong>master</strong> container.</p>
+    <code>
+    function&nbsp;index()<br />
+    {<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;$data['header']&nbsp;=&nbsp;&quot;My&nbsp;Page&quot;;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;$data['page']&nbsp;=&nbsp;$this-&gt;config-&gt;item('backendpro_template_admin')&nbsp;.&nbsp;&quot;my_view_file&quot;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;$data['module']&nbsp;='<var>module</var>';<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;load-&gt;view($this-&gt;_container,$data);<br />
+    }
+    </code>
+    <p>In the above example you will see I specify a <var>module</var> to load the view from.
+    So in this example it will load the view file <kbd>modules/<var>module</var>/view/admin/my_view_file.php</kbd>.</p> 
+    </li>
+</ol>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

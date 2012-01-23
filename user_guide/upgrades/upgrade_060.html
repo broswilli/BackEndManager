@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Upgrading from 0.5.1 to 0.6</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;    
+<a href="../general/upgrade.html">Upgrading From a Previous Version</a> &nbsp;&#8250;&nbsp;    
+Upgrading from 0.5.1 to 0.6
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Upgrading from 0.5.1 to 0.6</h1>
+
+<p>Before you start the upgrade process please take a full backup of both your website files
+and also your database. Please also take your site offline by replacing the index.php file 
+with a static one.</p>
+
+<p class="important"><strong>Important:</strong> Please read the documentation on the new 
+<a href="../libraries/assets.html">Asset Library</a> and <a href="../libraries/site.html">Site Library</a> before continuing with the upgrade process.</p>
+
+<h2>Step 1: Update Files</h2>
+<p>Replace the files in the following folders with the newly downloaded versions.</p>
+<ul>
+	<li><dfn>assets</dfn></li>
+	<li><dfn>modules</dfn></li>
+	<li><dfn>system/application</dfn></li>
+</ul>
+<p class="important"><strong>Note:</strong> If you have any custom developed files in these folders please make copies of them first. This may include customer user authentication and custom website preference forms.</p>
+ 
+<h2>Step 2: Upgrade from old Page Library to Site Library</h2>
+<p>Since this update uses a new library you will have to update some old code you 
+made calls to, please run the follow replacements on your website code:
+<ol>
+	<li>Replace <dfn>page->icon</dfn> with <dfn>bep_assets->icon</dfn>.</li>
+	<li>Replace <dfn>page->set_metatag</dfn> with <dfn>bep_site->set_metatag</dfn>.</li>
+	<li>Replace <dfn>page->set_crumb</dfn> with <dfn>bep_site->set_crumb</dfn>.</li>
+	<li>Replace <dfn>page->set_variable</dfn> with <dfn>bep_site->set_variable</dfn>.</li>
+	<li>Replace <dfn>page->set_js</dfn> with <dfn>bep_site->set_js_block</dfn>.</li>
+	<li>Replace <dfn>page->output_js</dfn> with <dfn>bep_site->get_js_blocks</dfn>.</li>
+	<li>Do a search for <dfn>$this->page->output_metatags()</dfn>, the new method only returns 
+	the string so you will have to print it now as well (where as the old method could do both) 
+	replace with <dfn>print $this->bep_site->get_metatags()</dfn>.</li>
+	<li>Do a search for <dfn>$this->page->output_breadcrumb()</dfn>, the new method only returns 
+	the string so you will have to print it now as well (where as the old method could do both) 
+	replace with <dfn>print $this->bep_site->get_breadcrumb()</dfn>.</li>
+	<li>Do a search for <dfn>$this->page->output_variables()</dfn> the new method only returns 
+	the string so you will have to print it now as well (where as the old method could do both) 
+	replace with <dfn>print $this->bep_site->get_variables()</dfn>.</li>
+	<li>Do a search for <dfn>$this->page->output_assets</dfn> the new method only returns 
+	the string so you will have to print it now as well (where as the old method could do both) 
+	replace with <dfn>print $this->bep_assets->get_header_assets()</dfn>.</li>
+</ol></p>
+
+<h2>Step 3: Relocate JS to PHP Variables</h2>
+<p>We must now relocate the default JS to PHP variable array. Open <dfn>modules/page/config/page.php</dfn> and 
+locate <dfn>default_page_variables</dfn>. Copy the contents of the array and now open <dfn>modules/site/config/bep_site.php</dfn>. 
+Paste the contents of the array into <dfn>default_site_variables</dfn>.</p>
+ 
+<h2>Step 4: Add the new get_footer_assets() code</h2>
+<p>The new Asset Library comes with the ability to output assets to the footer of the page (please 
+read the documentation as to why). In any non BackendPro container view you must add the following code just 
+before the <dfn>&lt;/body&gt;</dfn> tag.</p>
+<code>
+	print $this->bep_assets->get_footer_assets();
+</code>
+ 
+<h2>Step 5: Transfer current assets over to the new Asset Library</h2>
+<p>Copy all shared/public/admin css/js assets into there new folders <dfn>assets/css/</dfn> & 
+<dfn>assets/js/</dfn> respectively. You may need to give some of them unique names.</p>
+<p>Now open <dfn>modules/site/config/bep_assets.php</dfn> and setup your new asset references 
+and asset groups.</p>
+<p>You will then need to do a search for <dfn>page->set_asset</dfn> and replace any old asset 
+loading code with the new <dfn>bep_assets->load_asset</dfn> code.</p>
+
+<h2>Step 6: Delete Page Module</h2>
+<p>Once you are happy with the new Asset and Site Libraries working fine, delete the old 
+Page module folder and old admin/public/shared asset folders.</p>
+
+<h2>Step 7: Update the Database</h2>
+<p>Please run the following SQL queries on your BackendPro database:</p>
+<ol>
+	<li><dfn>DELETE FROM `be_preferences` WHERE `be_preferences`.`name` = 'maintenance_message';</dfn></li>
+	<li><dfn>DELETE FROM `be_preferences` WHERE `be_preferences`.`name` = 'maintenance_mode';</dfn></li>
+</ol>
+
+<h2>Step 8: Update your user guide</h2>
+<p>Please replace your local copy of the user guide with the new version, including the image files.</p> 
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

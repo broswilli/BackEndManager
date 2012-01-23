@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : User Authentication</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;  
+User Authentication
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>User Authentication</h1>
+
+<p><strong>BackendPro</strong> has built in user authentication from the start. If you have used systems like
+FreakAuth before then you will be at home with <strong>BackendPro</strong>, but it offers even more. Unless you want 
+to change the way people log in or the logic behind user authentication I would just quickly skim 
+this page to get the basics.</p>
+
+<p class="important"><strong>Note:</strong>&nbsp; This class is initialized automatically by the system so there is no need to do it manually.</p>
+   
+<p>Features:</p>
+<ul>
+    <li>Basic user authentication from the start</li>
+    <li>Customizable user groups</li>
+    <li>Multiple user activation methods and settings (Please see the <a href="../features/preferences.html">preference page</a> for possible settings)</li>
+    <li>Custom user profiles</li>
+</ul>
+
+<p class="important"><strong>Important:</strong>&nbsp; The user authentication class stores passwords using an additional salt (More information <a href="http://en.wikipedia.org/wiki/Salt_(cryptography)">here</a>).
+The salt used is that of the <var>encryption_key</var> defined in the file <var>system/application/config/config.php</var>. Changing the key 
+after user accounts have been created will corrupt their passwords requiring the user to request a new password.</p>
+
+<h2>Configuration Settings</h2>
+
+<p>All configuration settings for the Userlib Class can be found in <var>modules/auth/config/userlib.php</var></p>
+
+
+<table cellpadding="0" cellspacing="1" border="0" style="width:100%" class="tableborder">
+<tr>
+    <th>Preference</th>
+    <th>Default&nbsp;Value</th>
+    <th>Options</th>
+    <th>Description</th>
+</tr>
+<tr>
+    <td class="td"><strong>userlib_action_login</strong></td>
+    <td class="td">NULL</td>
+    <td class="td">None</td>
+    <td class="td">The CodeIgniter URI string to redirect the user to upon login</td>
+</tr>
+<tr>
+    <td class="td"><strong>userlib_action_logout</strong></td>
+    <td class="td">NULL</td>
+    <td class="td">None</td>
+    <td class="td">The CodeIgniter URI string to redirect the user to upon logout</td>
+</tr>
+<tr>
+    <td class="td"><strong>userlib_action_register</strong></td>
+    <td class="td">NULL</td>
+    <td class="td">None</td>
+    <td class="td">The CodeIgniter URI string to redirect the user to upon registration</td>
+</tr>
+<tr>
+    <td class="td"><strong>userlib_action_activation</strong></td>
+    <td class="td">NULL</td>
+    <td class="td">None</td>
+    <td class="td">The CodeIgniter URI string to redirect the user to upon activation</td>
+</tr>
+<tr>
+    <td class="td"><strong>userlib_action_forgotten_password</strong></td>
+    <td class="td">auth/login</td>
+    <td class="td">None</td>
+    <td class="td">The CodeIgniter URI string to redirect the user to upon completion of a forgotten password form</td>
+</tr>
+<tr>
+    <td class="td"><strong>userlib_action_admin_login</strong></td>
+    <td class="td">admin</td>
+    <td class="td">None</td>
+    <td class="td">The CodeIgniter URI string to redirect the user to upon login IF they have access to the control panel resource</td>
+</tr>
+<tr>
+    <td class="td"><strong>userlib_action_admin_logout</strong></td>
+    <td class="td">NULL</td>
+    <td class="td">None</td>
+    <td class="td">The CodeIgniter URI string to redirect the user to upon logout IF they had access to the control panel resource</td>
+</tr>
+<tr>
+    <td class="td"><strong>userlib_profile_fields</strong></td>
+    <td class="td"></td>
+    <td class="td">None</td>
+    <td class="td">An associative array of custom user profile field columns to their matching full names</td>
+</tr>
+<tr>
+    <td class="td"><strong>userlib_profile_rules</strong></td>
+    <td class="td"></td>
+    <td class="td">None</td>
+    <td class="td">An associative array of custom user profile field columns to their matching validation rules</td>
+</tr>
+</table>
+
+<h2>Custom User Profiles</h2>
+<p><strong>BackendPro</strong> comes with the ability to create extra user profile fields 
+for registered users. I will say now that unlike other systems, mine doesn't hold your hand along the way 
+to implement extra profile fields. If you want the functionality you have to provide it. The reason for 
+going along this kind of path is I decided a system which assumes to much is too restrictive. Its fine 
+for a CMS but not for developers. I will explain what you need to change to implement a basic user field, I'm 
+not that cruel.</p>
+
+<ol>
+    <li><strong>Update the database</strong><br />This is the first step you must take, locate the table <kbd>be_user_profiles</kbd> (unless you have changed 
+    the table prefix value in the backendpro config file). Create your new column with its required settings. For this example I will create 
+    a column called <var>gender</var>.</li>
+    
+    <li><strong>Update the Userlib config file</strong><br />Locate the file 
+    <var>modules/auth/config/userlib.php</var> and scroll down to the bottom. There you will
+    find two arrays, <kbd>userlib_profile_fields</kbd> and <kbd>userlib_profile_rules</kbd>. Here you want 
+    to update them to suit your new field.
+    <code>
+    $config['userlib_profile_fields'] = array('gender' =&gt; 'Gender');<br />
+    $config['userlib_profile_rules'] = array('gender' =&gt; 'required|alpha');
+    </code>
+    
+    <li><strong>Allow User Profiles</strong><br />
+    Log into the control panel and go to the <strong>Settings -&gt; Member Settings</strong> page. On 
+    there make sure the setting <kbd>Allow User Profiles</kbd> is set to <strong>yes</strong>. If you 
+    do not do this all it means is the administrators will not be able to change a users profile values.
+    </li>
+    
+    <li><strong>Update the Member area in the Control Panel</strong><br />
+    We want to allow administrators to now manage this new field for all users. Locate the file <var>modules/auth/controllers/admin/members.php</var>,
+    this file contains all the logic to manage a users account. There are several functions we must update so the form knows how to handle 
+    our new field.<br />
+    <br />
+    <dfn>_set_profile_defaults()</dfn> : This method is used when a new user is being created. In here you want to specify what value 
+    your custom fields should be set to by default. So for our example I will make set <var>gender</var> to <strong>female</strong>.
+    <code>
+    $this-&gt;validation-&gt;set_default_value('gender','female');
+    </code>
+    <br />    
+    <dfn>_get_profile_details()</dfn> : This method is used to extract the data submitted from a form and prepare it to
+    be submited to the database. So for our example we would need to fetch the checkbox value and assign it to an array item.<br />
+    <code>
+    $data['gender'] = $this-&gt;input-&gt;post('gender');
+    </code>
+    <br />
+    The last thing we must do is update the form which data can be entered into, locate and open the file <var>modules/auth/views/admin/members/form_member.php</var>,
+    scroll to the bottom and you will find an area for your custom profile fields (The format the form is laid out in is discussed <a href="../assets/css.html#forms">here</a>).
+    For our example I will add a simple radio button,<code>
+    &lt;li&gt;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;?=form_label('Gender','gender')?&gt;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;Male&nbsp;&lt;?=form_radio('gender','male',$this-&gt;validation-&gt;set_radio('gender','male'))?&gt;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;Female&nbsp;&lt;?=form_radio('gender','female',$this-&gt;validation-&gt;set_radio('gender','female'))?&gt;<br />
+    &lt;/li&gt;    
+    </code>
+    </li>
+    
+    <li><strong>Optional: Update the registration form</strong><br />
+    For this you must extend the User Authentication library, please see the next section how to do this.
+    </li>
+</ol>
+
+<h2>Extending the User Authentication System</h2>
+<p>As said above if you want to add/change the way authentication is performed, maybe 
+collect extra information from the user on registration then you must extend the current 
+<var>Auth_form_processing.php</var> class file. <strong>(Was userlib.php but has now changed
+since version 0.4)</strong></p>
+
+<p>This is rather simple, just create a new file called <var>MY_Auth_form_processing.php</var> in the
+<var>modules/auth/libraries</var> directory. Then you can overwrite any methods to achieve 
+the desired effect.</p>
+
+<table cellpadding="0" cellspacing="1" border="0" style="width:100%" class="tableborder">
+<tr>
+    <th>Method</th>
+    <th>Description</th>
+
+</tr>
+<tr>
+    <td class="td"><strong>login_form()</strong></td>
+    <td class="td">This method is called to create and display the login form, no login logic should be included in here.</td>
+</tr>
+<tr>
+    <td class="td"><strong>_login()</strong></td>
+    <td class="td">This method provides all login logic and checks once the login form has been submitted.</td>
+</tr>
+<tr>
+    <td class="td"><strong>register_form()</strong></td>
+    <td class="td">This method is called to create and display the registration form, no registration logic should be included in here.</td>
+</tr>
+<tr>
+    <td class="td"><strong>_register()</strong></td>
+    <td class="td">This method provides all registration logic and checks once the registration form has been submitted.</td>
+</tr>
+</table>
+
+<p>Please if possible extend base libraries since this will mean your changes will not be
+overwritten if you apply an update.</p>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

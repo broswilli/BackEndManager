@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Image Controller</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;    
+Image Controller
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+<h1>Image Controller</h1>
+<p>The Image controller is a new way to load asset images. It takes all the hassle and worry out of storing images of the correct size 
+and then displaying them on a page. It has the following features:</p>
+<ul>
+	<li><a href="#resizing">Image Resizing</a></li>
+	<li><a href="#cropping">Image Cropping</a></li>
+	<li><a href="#quality">Image Quality Adjustment</a></li>
+	<li>Image Watermarking (<b>Not yet implemented</b>)</li>
+	<li><a href="#caching">Image caching</a></li>
+</ul>
+
+<h2>Setup</h2>
+<p>Before using the image library there are a few settings you may want to tweak. Thse can be found in <dfn>modules/image/config/image.php</dfn>.</p>
+
+<table cellpadding="0" cellspacing="1" border="0" style="width:100%" class="tableborder">
+<tr>
+	<th>Preference</th>
+
+	<th>Default&nbsp;Value</th>
+	<th>Options</th>
+	<th>Description</th>
+</tr>
+<tr>
+	<td class="td"><strong>image_default_quality</strong></td>
+	<td class="td">100</td>
+	<td class="td">None</td>
+	<td class="td">The default image quality to output images at.</td>
+</tr>
+<tr>
+	<td class="td"><strong>image_folders</strong></td>
+	<td class="td">assets/images/</td>
+	<td class="td">None</td>
+
+	<td class="td">An array of folders (relative to index.php file) where images can be located in.</td>
+</tr>
+</table>
+
+<h2>Using the Image Controller</h2>
+<h3>Basic Usage</h3>
+<p>You may have noticed this feature is implemented as a controller not a library, this is to keep code down and simplify the use 
+of the class. The basic way you use the class is to pass the required parameters through the URI. Lets look at the most basic use of the class:</p>
+
+<code>&lt;img src="&lt;?=site_url('image/get/<dfn>file/my_image.jpg</dfn>')?&gt;" /&gt;</code>
+
+<p>Thats it, thats all you need. Now as said this is a rather simple use of the controller. All this will do is load an image called my_image.jpg. To 
+find this image it will search all the folders specified in the <dfn>image.php</dfn> config.</p>
+
+<a name="resizing"></a>
+<h3>Resizing an Image</h3>
+<p>Now there will be times when you want to resize an image before you display it, maybe a thumbnail or something. This is fully possible, 
+and there are three possible ways to resize an image. <strong>All methods to resize an image keep the width/height ratio.</strong></p>
+<ol>
+	<li><b>By Width</b>
+	<p>This will resize an image down to a certain width while keeping the width/height ratio.</p>
+	<code>&lt;img src="&lt;?=site_url('image/get/<dfn>width/400/</dfn>file/my_image.jpg')?&gt;" /&gt;</code>
+	</li>
+	
+	<li><b>By Height</b>
+	<p>This will resize an image down to a certain height while keeping the width/height ratio.</p>
+	<code>&lt;img src="&lt;?=site_url('image/get/<dfn>height/250/</dfn>file/my_image.jpg')?&gt;" /&gt;</code>
+	</li>
+	
+	<li><b>By Area</b>
+	<p>This will resize an image down to make sure it fits in the specified constraints. This is very good if you have to 
+	handle landscape & portrait images but still want them to fit in a certain area on your page. What it does is it resizes 
+	the image based on the largest dimension. This guarantees the image will be small than the dimensions you specify in the URI.</p>
+	<code>&lt;img src="&lt;?=site_url('image/get/<dfn>width/100/height/200/</dfn>file/my_image.jpg')?&gt;" /&gt;</code>
+	</li>
+</ol>
+
+<a name="cropping"></a>
+<h3>Cropping an Image</h3>
+<p>Cropping an image to a correct format can be very handy and with the Image Controller its simple to do.</p>
+<code>&lt;img src="&lt;?=site_url('image/get/<dfn>crop/1:1/</dfn>file/my_image.jpg')?&gt;" /&gt;</code>
+<p>From the example above you will see I have applied a crop of 1:1 to the image, you can specify any crop ratio you want instead of 1:1, 
+e.g. 16:9, 3:2. As long as it follows the [number]:[number] format.</p>
+
+<a name="quality"></a>
+<h4>Changing Output Quality</h4>
+<p>There may be times when you want to show an image at reduced quality, maybe to save bandwidth or increase loading speed. You 
+can change the quality again with a URI parameter. Quality is expressed as a percentage from 1-100.</p>
+<code>&lt;img src="&lt;?=site_url('image/get/<dfn>quality/60/</dfn>file/my_image.jpg')?&gt;" /&gt;</code>
+
+<a name="caching"></a>
+<h2>Image Caching</h2>
+<p>The Image Controller by default caches dynamically generated images in the default CodeIgniter cache folder. This is to save 
+processing of the images upon every load. If you do not want the image to be cached just add the following URI paramter.</p>
+<code>&lt;img src="&lt;?=site_url('image/get/<dfn>nocache/true/</dfn>file/my_image.jpg')?&gt;" /&gt;</code>
+
+<h2>Overall Use</h2>
+<p class="important"><strong>Note:</strong> You can specify the URI parameters in any order but to aid readability please 
+put the <dfn>file/&lt;image_name&gt;.jpg</dfn> at the end, this also allows the image to be saved with the correct file name.</p>
+
+<p>All the features above can be combined into a single URI which does everything from resizing to changing the quality of the image:</p>
+<code>&lt;img src="&lt;?=site_url('image/get/<dfn>crop/3:2/width/100/height/300/quality/50/nocache/true/</dfn>file/my_image.jpg')?&gt;" /&gt;</code>
+
+<p>Transformation of the images are done in a specific order:</p>
+<ol>
+	<li>Cropping</li>
+	<li>Resizing</li>
+	<li>Quality Adjustment</li>
+</ol>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

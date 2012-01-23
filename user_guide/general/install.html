@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Install Process</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;    
+Install Process
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Install Process</h1>
+
+<p><strong>BackendPro</strong> comes with an installation process to setup the system ready 
+for your use. It is very important the process completes successfully otherwise parts of 
+the application may fail.</p>
+
+<p class="important"><strong>Important:</strong> Please make sure you have the latest version of CodeIgniter on your webserver before 
+trying to run the install process. <strong>BackendPro</strong> can only run if CodeIgniter is already there.</p>
+ 
+<h2>Starting the Install</h2>
+<p>To start the install direct your browser at the <kbd>/install</kbd> directory of 
+where you installed the application and where CodeIgniter is. You should be presented 
+with a form and further instructions.</p>
+
+<h2>Installation Steps</h2>
+<p>During the installation the following steps will be performed to setup your system 
+ready to be used. Please each one so you know what will happen and what you need to do.</p>
+<ul>
+	<li><strong>CodeIgniter File System</strong><br />
+	First you are asked for the structure of your CI file system. This is useful if you 
+	have changed the location of your application folder or any other main system folders. 
+	<i>Please note these folders will not be changed in the CI files, you will have to do this
+	manualy, this is only for the install process.</i></li>
+	
+    <li><strong>Database</strong><br />
+    You are asked for the details of the database where 
+    the application will be setup. The user specified must be able to create tables of
+    the type <strong>InnoDB</strong> and the database specified must already be created.</li>
+    
+    <li><strong>User Account</strong><br />
+    This is the first user account on the system. It is initially granted Administrator
+    rights but you can change this after installation.</li>
+    
+    <li><strong>ReCAPTCHA</strong><br />
+    Please note this section is not required unless you want to use captcha checks 
+    on registration and login. If you decide not to provide public/private keys at this
+    stage you can add them to the system manually in the file <kbd>modules/recaptcha/config/recaptcha.php</kbd>.</li>
+    
+    <li><strong>Encryption Key</strong><br />
+    During the setup a random encryption key will be created in your <dfn>system/application/config/config.php</dfn> 
+    file. <strong>DO NOT CHANGE THIS KEY AFTER THE SYSTEM HAS BEEN INSTALLED</strong>. Doing so 
+    will corrupt all user passwords currently on the system.</li>
+</ul>
+
+<p class="important"><strong>Important:</strong>&nbsp; Please remove the <dfn>/install</dfn> 
+directory after you have setup the system. Leaving it on the system is a huge security risk.</p>
+ 
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

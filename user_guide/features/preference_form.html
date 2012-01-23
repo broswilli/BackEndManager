@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Preference Form Class</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;    
+Preference Form Class
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Preference Form Class</h1>
+
+<p>This class can be used to create forms to manage website settings stored in the database with only a few lines of code.</p>
+
+<p class="important"><strong>Note:</strong>&nbsp; For an example of a controller implementing a preference form please take a look at the file 
+<var>system/application/controllers/admin/settings.php</var></p>
+
+<h2>Using the Class</h2>
+<p>Creating a preference form couldn't be simpler. It only takes a few lines of code instructing the class 
+what preferences you want to manage and how they should be managed and the rest is done for you.</p>
+
+<p>There are two ways to setup the preference form. The first is with <strong>groups</strong>. This 
+method is good if you have a lot of settings you want to manage on the same page. An example of a grouped 
+form is that in the <var>settings.php</var> file mentioned earlier. This allows you to have multiple sub-categories 
+of settings, making it easier for the user to find the setting they want.</p>
+
+<p>The other way is to have all the settings on a <strong>single page</strong>. Now this is fine if you only 
+have a couple of settings.</p>
+
+<h3>Setting up a form</h3>
+<ol>
+<li>
+	<p>To setup a form you pass a <kbd>config</kbd> array into the class when loading it. This config 
+	array must have <kbd>form_name</kbd> and <kbd>form_link</kbd> entries. Where <var>uri_string</var> 
+	is the uri string corresponding to the controller and method from which the user will visit to display 
+	the settings form. <strong>If the form is being created when the user visits an <dfn>index()</dfn> method 
+	of a controller you must put <var>/index</var> on the end of the uri string.</strong></p>
+	<code>
+	$config['<kbd>form_name</kbd>'] = 'My Form';<br />
+	$config['<kbd>form_link</kbd>'] = '<var>uri_string</var>';
+	</code>
+</li>
+
+<li>
+	<p>The next data you need to pass in is what groups you want to assign settings to. If you do not want 
+	to use groups then skip this bit.</p>
+	<code>
+	$config['groups']&nbsp;=&nbsp;array)<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;'<var>group_id</var>'&nbsp;=&gt;&nbsp;array('name'&nbsp;=&gt;&nbsp;'<var>name</var>',&nbsp;fields&nbsp;=&gt;&nbsp;'<var>fields</var>'),<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;..<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;..<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;'<var>group_id</var>'&nbsp;=&gt;&nbsp;array('name'&nbsp;=&gt;&nbsp;'<var>name</var>',&nbsp;fields&nbsp;=&gt;&nbsp;'<var>fields</var>'),<br />
+	);
+	</code>
+	<p>From the code above you can see each row of the array defines a new group to split the form into.</p> 
+	<ul>
+	    <li><var>group_id</var> should be a unique string for that group which can be passed in the url. So stick to alpha, numeric &amp; underscore strings only.</li>
+	    <li><var>name</var> is the form title. So 'General Settings' or something.</li>
+	    <li><var>fields</var> is a comma separated string of all the preference names to include in the group.</li>
+	</ul>
+</li>
+
+<li>
+	<p>The last part of the configuration is how to handle each preference, e.g. what type of form input and what 
+	validation should be used. Only by defining a preference in the following way will it be included in the form, 
+	just assigning it to a group will not display the preference.</p>
+	<code>
+	$config['fields']['<var>setting_name</var>'] = array('type'=&gt;'<var>type</var>','rules'=&gt;'<var>rules</var>', 'params'=&gt;<kbd>params</kbd>);<br />
+	..<br />
+	..<br /> 
+	$config['fields']['<var>setting_name</var>'] = array('type'=&gt;'<var>type</var>','rules'=&gt;'<var>rules</var>', 'params'=&gt; <kbd>params</kbd>); 
+	</code>
+	
+	<p>Now I'm afraid explaining this can be quite tricky.</p>
+	<ul>
+	    <li><var>setting_name</var> is the name you have called the preference in the database.</li>
+	    <li><var>type</var> is the type of input you want, please see <a href="#form_input_types">here</a> for the possible types.</li>
+	    <li><var>rules</var> is a validation string you want to run the input through on submission. E.g. <dfn>'trim|required|valid_email'</dfn></li>
+	    <li><kbd>params</kbd> is an array of extra parameters you want assigned to the input E.g. <dfn>array('size'=&gt;'20','onClick'=&gt;'..')</dfn>.</li>
+	</ul>
+	
+	<p>Now as said it is a bit complex and this is why. The preference form class has defaults. What I mean by this if you don't
+	specify a field value it will use a default, lets look at some examples.</p>
+	<code>
+	//&nbsp;This&nbsp;is&nbsp;perfectly&nbsp;OK,&nbsp;not&nbsp;entering&nbsp;anything&nbsp;will&nbsp;default&nbsp;to&nbsp;using&nbsp;a&nbsp;<kbd>text</kbd>&nbsp;input<br />
+	//&nbsp;with&nbsp;no&nbsp;validation<br />
+	$fields['fields']['setting']&nbsp;=&nbsp;array();&nbsp;<br />
+	<br />
+	//&nbsp;Here&nbsp;we&nbsp;only&nbsp;specify&nbsp;a&nbsp;type,&nbsp;so&nbsp;it&nbsp;will&nbsp;go&nbsp;and&nbsp;fetch&nbsp;the&nbsp;default&nbsp;validation&nbsp;rule&nbsp;<br />
+	//&nbsp;for&nbsp;this&nbsp;type&nbsp;and&nbsp;use&nbsp;it.<br />
+	$fields['fields']['setting']&nbsp;=&nbsp;array('type'=&gt;'boolean');&nbsp;
+	</code>
+</li>
+
+<li>
+	<p>Now we have the config values setup we need to output the form created.</p>
+	<code>
+	$this-&gt;load-&gt;module_library('preferences','preference_form');&lt;br&nbsp;/&gt;<br />
+	$this-&gt;preference_form-&gt;initalize($config);<br />
+	<br />
+	// Get the form output and assign to a variable ready to display<br />
+	$form_output = $this-&gt;preference_form-&gt;display();
+	</code>
+</li>
+</ol>
+
+<a name="form_input_types"></a>
+<h2>Form Input Types</h2>
+<p>As said in the section above, you can select from many different pre-created input types. 
+</p>
+
+<table cellpadding="0" cellspacing="1" border="0" style="width:100%" class="tableborder">
+<tr>
+    <th>Type</th>
+    <th>Default Rule</th>
+    <th>Description</th>
+
+</tr>
+<tr>
+    <td class="td"><strong>text</strong></td>
+    <td class="td">trim</td>
+    <td class="td">Creates a basic textbox input for entering a string.</td>
+</tr>
+<tr>
+    <td class="td"><strong>textarea</strong></td>
+    <td class="td">trim</td>
+    <td class="td">Creates a basic textarea input. You may need to specify rows and cols in the 'params' array, E.g. <dfn> 'params' =&gt; array('rows'=&gt;'15','cols'=&gt;'15')</dfn></td>
+</tr>
+<tr>
+    <td class="td"><strong>boolean</strong></td>
+    <td class="td"></td>
+    <td class="td">Creates yes/no radio buttons for boolean input</td>
+</tr>
+<tr>
+    <td class="td"><strong>dropdown</strong></td>
+    <td class="td"></td>                                               
+    <td class="td">Creates a dropdown select box. To specify the possible options pass an 'options' array in the 'params' array. E.g <dfn>'params' =&gt; array('options' =&gt; array('1'=&gt;'Option 1','2'=&gt;'Option 2'))</dfn></td>
+</tr>
+</table>
+<p>If you require a form input which is not provided by default you can add your own inputs to the class. 
+To do this open the file <var>modules/preferences/libraires/Preferences_form.php</var> and scroll down 
+until you see functions with the name <dfn>function _field_*</dfn>. Below is the basic code needed to create your 
+own form input function.</p>
+<code>
+function&nbsp;_field_<var>fieldname</var>($key)<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$params&nbsp;=&nbsp;$this-&gt;field[$key]['params'];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$params['name']&nbsp;=&nbsp;$key;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$params['id']&nbsp;=&nbsp;$key;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$params['value']&nbsp;=&nbsp;$this-&gt;CI-&gt;validation-&gt;{$key};<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;// Extra code needed to process the input<br />     
+&nbsp;&nbsp;&nbsp;&nbsp;<br />   
+&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;E.g.&nbsp;return&nbsp;form_input($params);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;<var>form_html</var>;<br />
+}
+</code>
+<p>If your stuck on what this code does I would advice you take a look at the way I have declared the basic types 
+in <var>modules/preferences/libraires/Preferences_form.php</var>.</p>
+
+<h2>Preference Form Function Reference</h2>
+
+<a name="initalize"></a>
+<h3>$this-&gt;preference_form-&gt;initalize()</h3>
+<p>Initalize Form:</p>
+<code>$this-&gt;preference_form-&gt;initalize(<var>$config</var>);</code>
+<p>Set up a form using the settings defined in the array <var>$config</var></p>
+
+<a name="display"></a>
+<h3>$this-&gt;preference_form-&gt;display()</h3>
+<p>Output Form:</p>
+<code>$this-&gt;preference_form-&gt;display(<var>TRUE/FALSE</var>);</code>
+<p>Process the form setup using <strong>initalize</strong> and return the output.</p>
+<p>The first <strong>optional</strong> parameter defines whether the output should 
+be returned or <strong>printed</strong>, if <strong>TRUE</strong> the form will be printed, otherwise 
+it will be returned.</p>
+
+<p class="important"><strong>Note:</strong>&nbsp; For an example of a controller implementing a preference form please take a look at the file 
+<var>system/application/controllers/admin/settings.php</var></p>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+           
+</div>
+
+</body>
+</html>

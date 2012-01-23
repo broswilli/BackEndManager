@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Conditional Assets</title>
+
+<style type='text/css' media='all'>@import url('../../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;    
+<a href="../assets.html">Asset Library</a> &nbsp;&#8250;&nbsp;  
+Conditional Assets
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Conditional Assets</h1>
+<p>Using the <a href="../assets.html">Asset Library</a> it is possible to have conditional CSS assets. 
+A conditional CSS asset defines certain conditions for when to load it, if the conditions match then its 
+loaded. Example conditions are as follows:</p>
+<ul>
+	<li>Browser type (i.e. Firefox, Opera, Internet Explorer</li>
+	<li>Browser version number</li>
+</ul>
+<p>Other than creating the new file you don't need to do anything else. When ever you include the original
+asset the loader will check to see if it needs to include any conditional assets.</p>
+
+<h2>How to define Conditional Assets</h2>
+<p>Once you have defined your normal assets in <dfn>modules/site/config/bep_assets.php</dfn> all you 
+have to do is create a new file in the same folder as the original asset using the following naming convention:</p>
+<code>&lt;asset_file_name&gt;[&lt;operation&gt;_&lt;browser&gt;_&lt;version&gt;].css</code>
+
+<h2>Examples</h2>
+<ol>
+	<li><p>Say we had an asset file called <dfn>reset.css</dfn> and we wanted to have another asset file
+	which would only load when someone visited your website using Internet Explorer. You would create 
+	the following new file.</p>
+	<code>reset[ie].css</code></li>
+	
+	<li><p>So the above is all well and good if the CSS is needed for all browsers of that type, but 
+	what if we want to load it for only a certain version? Say again we had a <dfn>reset.css</dfn> 
+	file but this we wanted some CSS to load when a user visited the site using Firefox 2.0.</p>
+	<code>reset[ff_2.0].css</code></li>
+	
+	<li><p>The last option is to specify an operation to perform on the browser version. So say we want 
+	to load a conditional asset if its greater than or equal to Internet Explorer 5.0</p>
+	<code>reset[gte_ie_5.0].css</code></li>
+</ol>
+
+<h2>Options</h2>
+<p>In the examples above you will see I have used certain values to specify when to load the asset, 
+these fall into 3 categories:</p>
+<ul>
+	<li><p><strong>Browser Type</strong>:<br/>
+	This is the make of browser which you want to load the asset for. Possible values are as follows (only the 
+	main options are listed below, for a full list please see <dfn>modules/site/config/bep_browser.php</dfn>):	
+	<ul>
+		<li><strong>ie</strong> - Internet Explorer</li>	
+		<li><strong>ff</strong> - Firefox</li>	
+		<li><strong>op</strong> - Opera</li>	
+		<li><strong>sf</strong> - Safari</li>	
+	</ul>
+	A browser type must be provided for all conditional assets.</p></li>
+	
+	<li><p><strong>Browser Version</strong>:<br/>
+	Along with a browser type a browser version can be specified. The version should be something as follows, <strong>5</strong> 
+	or <strong>5.0</strong> or <strong>5.0.0</strong>.</p></li>
+	
+	<li><p><strong>Operator</strong> (to be used with Browser Version only):<br/>
+	You may also specify an operator, if none is provided then <strong>equals</strong> is used.
+	The list of possible operators are below:
+	<ul>
+		<li><strong>eq</strong> - Equals</li>
+		<li><strong>ne</strong> - Not Equals</li>
+		<li><strong>lt</strong> - Less than</li>
+		<li><strong>lte</strong> - Less than or equals</li>
+		<li><strong>gt</strong> - Greater than</li>
+		<li><strong>gte</strong> - Greater than or equals</li>
+	</ul>
+	Please note, the operator only takes effect on the version number. So doing <dfn>ne_ff_2.0</dfn> 
+	will match all versions of Firefox apart from 2.0, it does not mean all other browsers apart from 
+	Firefox 2.0.</p></li>
+</ul>
+
+</div>
+<!-- END CONTENT -->
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

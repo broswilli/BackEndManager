@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Preferences</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;      
+Preferences
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Preferences</h1>
+
+<p><strong>BackendPro</strong> instead of using configuration files to store settings, it stores settings in 
+a database table. The main advantage of this is it means simple interfaces can be
+used to update the values without having to go into the file system.</p>
+
+<p>Many different data types can be stored using the preference table but two I will bring attention to a few:</p>
+<ul>
+    <li><kbd>Boolean</kbd> : You can store boolean values in the database, but store them as <strong>1</strong> 
+    or <strong>0</strong> instead. The reason for doing this is it means simple <dfn>if statements</dfn> can be used
+    on the values instead of having to perform string evaluation if the value was instead stored as <strong>TRUE</strong> 
+    or <strong>FALSE</strong>.</li>
+    
+    <li><kbd>Arrays</kbd> : There may be a time when you want an array to be stored as a setting. This is fine, the system 
+    should detect that the variable is an array and will <dfn>serialize</dfn> it. Upon fetching the setting it will then 
+    <dfn>unserialize</dfn> it for your use.</li>
+    
+    <li><kbd>Long Text</kbd> : Want to store a very large paragraph as a preference, thats fine since the table 
+    is implemented with a column type <strong>Text</strong> so no trimming will occur.</li>
+</ul>
+
+<h2>Fetch Setting</h2>
+<p>Fetch a setting value:</p>
+<code>$this-&gt;preference-&gt;item('<var>name</var>')</code>
+
+<h2>Default Settings</h2>
+<p>The <strong>BackendPro</strong> system comes with many settings already setup. Below is a description 
+of each, what it does and its default value. <strong>Please do not change these preference values directly
+in the database table, use the preference forms provided.</strong></p>
+
+<table cellpadding="0" cellspacing="1" border="0" style="width:100%" class="tableborder">
+<tr>
+    <th>Preference</th>
+    <th>Default&nbsp;Value</th>
+    <th>Options</th>
+    <th>Description</th>
+</tr>
+<!-- GENERAL SETTINGS -->
+<tr>
+    <td class="td"><strong>site_name</strong></td>
+    <td class="td">BackendPro</td>
+    <td class="td">None</td>
+    <td class="td">This is the name of your website. Using this preference means you can quickly change branding throughout your site.</td>
+</tr>
+<!-- MAINTENANCE & DEBUGING SETTINGS -->
+<tr>
+    <td class="td"><strong>page_debug</strong><a name="page_debug"></a></td>
+    <td class="td">0</td>
+    <td class="td">1/0 (boolean)</td>
+    <td class="td">If set to 1 this will display page debug information provided by <dfn>$this-&gt;output-&gt;enable_profiler()</dfn>.</td>
+</tr>
+<tr>
+    <td class="td"><strong>keep_error_logs_for</strong></td>
+    <td class="td">30</td>
+    <td class="td">None</td>
+    <td class="td">Number of days to keep error logs for</td>
+</tr>
+<!-- MEMBER SETTINGS -->
+<tr>
+    <td class="td"><strong>default_user_group</strong></td>
+    <td class="td">1</td>
+    <td class="td">User Group ID</td>
+    <td class="td">The user group ID to assign all new users to.</td>
+</tr>
+<tr>
+    <td class="td"><strong>allow_user_registration</strong></td>
+    <td class="td">1</td>
+    <td class="td">1/0 (boolean)</td>
+    <td class="td">If set to 1 it will allow users to register an account with the website, otherwise an admin must create all new accounts.</td>
+</tr>
+<tr>
+    <td class="td"><strong>allow_user_profiles</strong></td>
+    <td class="td">0</td>
+    <td class="td">1/0 (boolean)</td>
+    <td class="td">If set to 1 it will allow custom user profiles to be used on the system, otherwise it will not.</td>
+</tr>
+<tr>
+    <td class="td"><strong>activation_method</strong></td>
+    <td class="td">email</td>
+    <td class="td">email/admin/none</td>
+    <td class="td">What action must be taken to activate newly created accounts.</td>
+</tr>
+<tr>
+    <td class="td"><strong>account_activation_time</strong></td>
+    <td class="td">7</td>
+    <td class="td">None</td>
+    <td class="td">Number of days before a new account must be activated.</td>
+</tr>
+<tr>
+    <td class="td"><strong>autologin_period</strong></td>
+    <td class="td">30</td>
+    <td class="td">None</td>
+    <td class="td">Number of days a user stays logged in, if they select 'Remember Me' upon login</td>
+</tr>
+<tr>
+	<td class="td"><strong>login_field</strong></td>
+	<td class="td">email</td>
+	<td class="td">email,username,either</td>
+	<td class="td">This sets the login method for the user into the BackendPro system. Either allowing by username, email or either.</td>
+</tr>
+
+<!-- SECURITY SETTINGS -->
+<tr>
+    <td class="td"><strong>use_registration_captcha</strong></td>
+    <td class="td">0</td>
+    <td class="td">1/0 (boolean)</td>
+    <td class="td">If set to 1 a captcha form is used upon registration</td>
+</tr>
+<tr>
+    <td class="td"><strong>use_login_captcha</strong></td>
+    <td class="td">0</td>
+    <td class="td">1/0 (boolean)</td>
+    <td class="td">If set to 1 a captcha form is used upon login</td>
+</tr>
+<tr>
+    <td class="td"><strong>min_password_length</strong></td>
+    <td class="td">8</td>
+    <td class="td">None</td>
+    <td class="td">Minimum number of characters a password must be</td>
+</tr>
+<!-- COMMUNICATION SETTINGS -->
+<tr>
+    <td class="td"><strong>automated_from_email</strong></td>
+    <td class="td">noreply@backendpro.co.uk</td>
+    <td class="td">None</td>
+    <td class="td">This is the email used, when any system emails are sent to the user. E.g. activation emails</td>
+</tr>
+<tr>
+    <td class="td"><strong>automated_from_name</strong></td>
+    <td class="td">BackendPro</td>
+    <td class="td">None</td>
+    <td class="td">This is the name used, when any system emails are sent to the user. E.g. activation emails</td>
+</tr>
+<tr>
+    <td class="td"><strong>email_protocol</strong></td>
+    <td class="td">smtp</td>
+    <td class="td">smtp/mail/sendmail</td>
+    <td class="td">Email protocol used to send system emails.</td>
+</tr>
+<tr>
+    <td class="td"><strong>email_mailpath</strong></td>
+    <td class="td">/usr/sbin/sendmail</td>
+    <td class="td">None</td>
+    <td class="td">Path to the sendmail application (only needed if the sendmail protocol is selected)</td>
+</tr>
+<tr>
+    <td class="td"><strong>smtp_host</strong></td>
+    <td class="td"></td>
+    <td class="td">None</td>
+    <td class="td">SMTP host used to send emails (only needed if the smtp protocol is selected)</td>
+</tr>
+<tr>
+    <td class="td"><strong>smtp_user</strong></td>
+    <td class="td"></td>
+    <td class="td">None</td>
+    <td class="td">SMTP username used to send emails (only needed if the smtp protocol is selected)</td>
+</tr>
+<tr>
+    <td class="td"><strong>smtp_pass</strong></td>
+    <td class="td"></td>
+    <td class="td">None</td>
+    <td class="td">SMTP password used to send emails (only needed if the smtp protocol is selected)</td>
+</tr>
+<tr>
+    <td class="td"><strong>smtp_port</strong></td>
+    <td class="td">25</td>
+    <td class="td">None</td>
+    <td class="td">SMTP post used to send emails (only needed if the smtp protocol is selected)</td>
+</tr>
+<tr>
+    <td class="td"><strong>smtp_timeout</strong></td>
+    <td class="td">5</td>
+    <td class="td">None</td>
+    <td class="td">SMTP timeout(seconds) used to send emails (only needed if the smtp protocol is selected)</td>
+</tr>
+<tr>
+    <td class="td"><strong>email_wordwrap</strong></td>
+    <td class="td">1</td>
+    <td class="td">1/0 (boolean)</td>
+    <td class="td">If set to 1 emails will be wordwrapped</td>
+</tr>
+<tr>
+    <td class="td"><strong>email_wrapchars</strong></td>
+    <td class="td">76</td>
+    <td class="td">None</td>
+    <td class="td">Number of characters to wrap emails at</td>
+</tr>
+<tr>
+    <td class="td"><strong>email_mailtype</strong></td>
+    <td class="td">text</td>
+    <td class="td">text/html</td>
+    <td class="td">Email format to send emails as</td>
+</tr>
+<tr>
+    <td class="td"><strong>email_charset</strong></td>
+    <td class="td">utf-8</td>
+    <td class="td">None</td>
+    <td class="td">Charset used to send emails as</td>
+</tr>
+<tr>
+    <td class="td"><strong>bcc_batch_mode</strong></td>
+    <td class="td">0</td>
+    <td class="td">1/0 (boolean)</td>
+    <td class="td">If set to 1 emails will be sent is batches. This can be useful for sendming thousands of emails and not flooding the server.</td>
+</tr>
+<tr>
+    <td class="td"><strong>bcc_batch_size</strong></td>
+    <td class="td">200</td>
+    <td class="td">None</td>
+    <td class="td">Number of batch emails to send at once, 200 should be a good value</td>
+</tr>
+</table>
+
+<h2>Adding your own preferences</h2>
+<p>To add your own preference all you need to do is add a new row in the <kbd>be_preferences</kbd> table 
+in the database. Assign it a default value and your done. If you would however like to create a form 
+to manage the setting, please see below.</p>
+
+<h2>Preference Form Creation</h2>
+<p>Not only can you manage the default system settings using the preference form.
+But you can also create settings and a form for your <strong>own</strong> 
+preferences by using the <a href="preference_form.html">Preference Form Class</a>.</p>
+
+<p>If you would like to see an example of a controller implementing a preference form have a look 
+at the file <var>system/application/controllers/admin/settings.php</var>.</p>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

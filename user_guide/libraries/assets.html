@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Asset Library</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;    
+Asset Library
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Asset Library</h1>
+<p>The Asset library takes over some of the role of the old Page class prior to version 0.6.
+It allows asset files to be loaded and optimised in a controller to ease development 
+while at the same time providing quick loading files for the live web server.</p>
+<p class="important"><strong>Important:</strong>&nbsp; This class is initialized automatically by the system so there is no need to do it manually.</p>
+    
+<p>Features:</p>
+<ul>
+	<li><a href="#asset_dependencies">Asset Dependencies</a></li>
+    <li><a href="#asset_group_array">Asset Groups</a></li>
+    <li><a href="assets/conditional_assets.html">Browser Specific Assets (a.k.a Conditional Assets)</a></li>
+	<li><a href="assets/asset_optimisation.html">Asset Caching and Optimisation</a></li>
+	<li><a href="assets/css_compression.html">CSS Compression</a></li>
+	<li><a href="assets/js_compression.html">JS Compression</a></li>
+</ul>
+
+<h2>How to use the Asset Library?</h2>
+<p>The asset library is loaded by default by the BackendPro Class. The class file can be found at <var>modules/site/libraries/bep_assets.php</var></p>
+
+<p>To access a method in the Asset library please using the following syntax:</p>
+<code>
+	$this-&gt;bep_assets-&gt;{method_name};
+</code>
+
+<a name="basics"></a>
+<h2>The Basics</h2>
+<h3>What is an Asset? And why do we need a Loader?</h3>
+<p>An asset is a file which contains either CSS or JS, which is used to style an HTML page 
+or provide functionality to a page.</p>
+<p>On small websites you may have a single CSS file to style your pages and a few JS files 
+to do some drop down menus with. As your site expands you will start to get more CSS and more JS, 
+so to keep it all maintainable you seperate it into smaller files keeping related things together. 
+Before you know it you need to load 10 CSS files and 5 JS files for one page, and 3 more CSS files 
+for a different page.</p>
+<p>An asset loading system will help you manage what files need to be loaded and when. This means you 
+are only ever loading the CSS and JS you need for a page, it also means you can optimise and cache
+the files to speed up loading even more. No more having to update header views to load a single extra 
+CSS files (which will now be loaded on every page even though it is only used on one), just a few 
+lines of code and the loader takes care of how to best load the files you want, when you want.</p>
+
+<h2>Configuration & Setup</h2>
+<p>All configuration settings for the Asset library can be found in <var>modules/site/config/bep_assets.php</var>.</p>
+<ul>
+	<li><a href="#asset_array">Asset Array</a></li>
+	<li><a href="#asset_group_array">Asset Group Array</a></li>
+</ul>
+
+<a name="asset_array"></a>
+<h3>Asset Array</h3>
+<p>To be able to load an asset in your code, you have to first tell the system about the file. Where it is, what do 
+you want to call it, how do you want it outputed and also does it need another asset to work.</p>
+<p>Lets take a look at some example asset definitions of all the options which are possible:</p>
+
+<ul>
+	<li><p><strong>A Simple Asset:</strong></p>
+		<code>$config['asset'][] = array('file'=&gt;'reset.css');</code>
+		<p>As you can see above we have defined an asset called <dfn>reset.css</dfn>, it is a CSS file
+		and therefore should be located in the <dfn>assets/css/</dfn> directory. This will be outputed 
+		in the <dfn>&lt;header&gt;</dfn> of the page.</p>
+		<p>Throughout your code you can reference this asset used the name <kbd>reset</kbd>.</p>
+	</li>
+	<li><p><strong>Changing the Asset Name:</strong></p>
+		<code>$config['asset'][] = array('file'=&gt;'my.style.file.css', '<var>name</var>'=>'style');</code>
+		<p>There will be times for what ever reason when you don't want to use the asset file
+		name to reference the asset. In this case you can specify a <var>name</var> attribute. This overrides 
+		the default name meaning you reference this asset using <kbd>style</kbd> rather than <i>my.style.file</i>.</p>
+	</li>
+	<li><p><strong>Dynamic Assets:</strong></p>
+		<code>$config['asset'][] = array('file'=&gt;'generate_js.php', 'name'=>'dynamic', '<var>type</var>'=>'js');</code>
+		<p>The asset loader can also handle dynamicly generated CSS/JS files. The only difference
+		is you must specify the <var>type</var> of the output, either 'css' or 'js' are valid values.</p>
+		<p>When using dynamic assets you must include several lines of code in the actual PHP file. The code below
+		sets what type of file the browser will see it as. The if statement is so
+		it is not used when caching the file, since it is not needed in this case.</p>
+		<code>
+			&lt;?php<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;!&nbsp;isset($cache_output))<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;header('content-type:text/css');&nbsp;//&nbsp;Include&nbsp;if&nbsp;a&nbsp;css&nbsp;file<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;header('content-type:text/js');&nbsp;&nbsp;//&nbsp;Include&nbsp;if&nbsp;a&nbsp;js&nbsp;file<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+			?&gt;
+		</code>
+	</li>
+	<a name="asset_dependencies"></a>
+	<li><p><strong>Asset Dependencies:</strong></p>
+		<code>$config['asset'][] = array('file'=&gt;'jquery.plugin.js', '<var>needs</var>'=>'plugin_css|jquery');</code>
+		<p>There will be times (mainly with JS files) when for it to work it depends on another asset 
+		file. In the example above our <strong>jquery.plugin,js</strong> asset requires two assets, 
+		one a CSS file and the other a jquery JS file.</p>
+		<p>An asset can depend on as many other assets as you want, seperate each asset reference name
+		using a <kbd>|</kbd> character .</p>
+		<p class="important"><strong>Important:</strong>&nbsp; Do not create <a href="http://en.wikipedia.org/wiki/Circular_dependency">circular dependencies</a>, 
+		it will cause the site to hang and is not caught by the loader.</p>
+	</li>	
+	<li><p><strong>Output JS Assets in Header</strong>:</strong></p>
+		<code>$config['asset'][] = array('file'=&gt;'jquery.plugin.js', '<var>position</var>'=>'header');</code>
+		<p>By default the asset loaded will load all JS files at the end of the document. This 
+		is becasue while a browser is downloading a JS file it can't do anything else. So by putting 
+		it at the end, your user should be able to see and use parts of the site without waiting. If you
+		need to use a <dfn>document.write</dfn> statement you will need to output the JS file to the header 
+		of the document. This can be done like in the example code above.</p>
+		<p>If you set an asset to be in the 'header' position then <strong>all</strong> the assets 
+		it depends on will also be moved to the header. <strong>Note: CSS assets are always outputed in the 
+		header</strong>.</p>
+	</li>
+</ul>
+
+<a name="asset_group_array"></a>
+<h3>Asset Group Array</h3>
+<p>There may be a case when you need to load groups of assets all at once. For example, 
+a collection of assets for a theme. This is possible by creating an entry in the 
+asset group array.</p>
+
+<code>
+	$config['asset_group']['SITE'] = 'reset|typography';
+</code>
+
+<p>In the code above you can see we have defined a group called <kbd>SITE</kbd> and in the group is a <strong>reset</strong> & <strong>typography</strong> asset.
+Group names should always be in <strong>CAPITALS</strong>.</p>
+<p>
+	There are 3 main default groups which are loaded in the BackendPro system:
+	<ul>
+		<li><strong>SITE</strong>: This group is loaded by the Site_Controller class, this means it is loaded for both
+		front end and backend controllers.</li>
+		<li><strong>PUBLIC</strong>: This group is loaded by the Public_Controller class, this means it is loaded only 
+		for a front end controller.</li>
+		<li><strong>ADMIN</strong>: This group is loaded by the Admin_Controller class, this means it is loaded only 
+		for a backend controller.</li>
+	</ul>
+</p>
+
+<h2>Methods</h2>
+
+<h3>$this-&gt;bep_assets-&gt;load_asset()</h3>
+<p>Load an Asset file:</p>
+<code>
+	$this-&gt;bep_assets-&gt;load_asset('<var>asset</var>')
+</code>
+<p>Specifies an asset file to load when the page is outputed. <var>asset</var> should be an asset <strong>reference</strong>. 
+This will depend on how you have setup the asset in the config file. Please read about the <a href="#asset_array">Asset array</a> 
+for more details.</p>
+
+<h3>$this-&gt;bep_assets-&gt;load_asset_group()</h3>
+<p>Load an Asset Group:</p>
+<code>
+	$this-&gt;bep_assets-&gt;load_asset_group('<var>group</var>')
+</code>
+<p>Specifies an asset group to load when the page is outputed.</p>
+
+<h3>$this-&gt;bep_assets-&gt;get_header_assets()</h3>
+<p>Get all the header assets for the current page. This would be used in your view and should be 
+put somewhere in the <dfn>&lt;header&gt;</dfn> tag.</p>
+
+<h3>$this-&gt;bep_assets-&gt;get_footer_assets()</h3>
+<p>Get all the footer assets for the current page. This would be used in your view and should be 
+last statement before the <dfn>&lt;body&gt;</dfn> closing tag.</p>
+
+<h3>$this-&gt;bep_assets-&gt;icon()</h3>
+<p>Output an Icon file:</p>
+<code>$this-&gt;bep_assets-&gt;icon('<var>name</var>','<var>title</var>');</code>
+<ul>
+	<li>The first parameter is the <var>name</var> of the icon file you want to output. It must be the filename of 
+	the icon file located in <dfn>assets/icons/</dfn> without the extension. <strong>Only PNG can 
+	currently be outputed.</strong></li>
+	
+	<li>The second <strong>optional</strong> paramter sets an image <var>title</var> which 
+	will appear on mouseover of the icon.</li>
+</ul>
+</div>
+<!-- END CONTENT -->
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Page Class</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;    
+Page Class
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Page Class</h1>
+
+<p>The Page Class provides you with features useful to outputting information from 
+PHP to controller views. Examples of these features include asset management, breadcrumb
+trail creation &amp; PHP to JS variable conversion.</p>
+
+<p class="important"><strong>Important:</strong>&nbsp; This class is initialized automatically by the system so there is no need to do it manually.</p>
+
+    
+<p>Features:</p>
+
+<ul>
+    <li>Asset Management</li>
+    <li>Breadcrumb Trail</li>
+    <li>PHP to JS variable conversion</li>
+    <li>Meta tag creation</li>
+</ul>
+
+<h2>How to use the Page Class?</h2>
+
+<p>Page Class is loaded by default by the BackendPro Class. The class file can be found at <var>modules/page/libraries/page.php</var></p>
+
+
+<h2>Configuration Settings</h2>
+
+<p>All configuration settings for the Page Class can be found in <var>modules/page/config/page.php</var>.</p>
+
+<table cellpadding="0" cellspacing="1" border="0" style="width:100%" class="tableborder">
+<tr>
+    <th>Preference</th>
+    <th>Default&nbsp;Value</th>
+    <th>Options</th>
+    <th>Description</th>    
+</tr>
+<tr>
+    <td class="td"><strong>assets_dir</strong></td>
+    <td class="td">assets/</td>
+    <td class="td">None</td>
+    <td class="td">Location of assets dir</td>
+</tr>
+<tr>
+    <td class="td"><strong>admin_assets</strong></td>
+    <td class="td">assets/admin/</td>
+    <td class="td">None</td>
+    <td class="td">Location of admin assets dir</td>
+</tr>
+<tr>
+    <td class="td"><strong>public_assets</strong></td>
+    <td class="td">assets/public/</td>
+    <td class="td">None</td>
+    <td class="td">Location of public assets dir</td>
+</tr>
+<tr>
+    <td class="td"><strong>shared_assets</strong></td>
+    <td class="td">assets/shared/</td>
+    <td class="td">None</td>
+    <td class="td">Location of shared assets dir</td>
+</tr>
+<tr>
+    <td class="td"><strong>default_assets</strong></td>
+    <td class="td">Array</td>
+    <td class="td">None</td>
+    <td class="td">Array of assets to load on every controller. Please see <var>modules/page/config/page.php</var> for further details.</td>
+</tr>
+<tr>
+    <td class="td"><strong>asset_cache_length</strong></td>
+    <td class="td">0</td>
+    <td class="td">None</td>
+    <td class="td">Number of hours to keep asset cache's for, 0 means no caching will be used</td>
+</tr>
+<tr>
+    <td class="td"><strong>asset_cache_file_pfx</strong></td>
+    <td class="td">cache_</td>
+    <td class="td">None</td>
+    <td class="td">Asset cache file prefix</td>
+</tr>
+<tr>
+    <td class="td"><strong>csstidy_path</strong></td>
+    <td class="td">plugins/csstidy/class.csstidy.php</td>
+    <td class="td">None</td>
+    <td class="td">Relative path from BASEPATH to the main CSS Tidy class file</td>
+</tr>
+<tr>
+    <td class="td"><strong>default_page_variables</strong></td>
+    <td class="td">Array</td>
+    <td class="td">None</td>
+    <td class="td">Array of PHP variables to convert into JS variables by default</td>
+</tr>
+</table>
+
+<a name="asset_caching"></a>
+<h2>Asset Caching</h2>
+<p>As said before, the page class can provide you with the ability to cache asset 
+files on the server so the client has to open fewer connections to a page, thus 
+decreasing loading time.</p>
+<p>Along with caching, optimisation of the contents is also possible. This decreases
+the overall file size and increases loading speeds further. By default <strong>BackendPro</strong> 
+comes with the ability to optimise code but requires some steps to turn this feature on</p>
+<ul>
+	<li><strong>CSS Optimisation</strong>:
+	<p>CSS optimisation has been implemented by using the <a href="http://csstidy.sourceforge.net/">CSSTidy</a> library.
+	To get CSS optimisation working please follow these few simple steps.</p>
+		<ol>
+			<li>Download the latest version of CSSTidy from <a href="https://sourceforge.net/project/showfiles.php?group_id=148404&package_id=166584">here</a> (As of writing 1.3)</li>
+			<li>In your system/plugins OR system/application/plugins folder extract the files into
+			there own folder. E.g. sysyetm/plugins/csstidy</li>
+			<li>Open <var>modules/page/config/page.php</var> and make sure <var>csstidy_path</var> points to <kbd>class.csstidy.php</kbd>
+			in your plugins/csstidy folder.</li>
+			<li>Turn asset caching on by specifying the <var>asset_cache_length</var> in <var>modules/page/config/page.php</var>.</li>
+		</ol>
+	</li>
+	
+	<li><strong>JS Optimisation</strong>:
+	<p>Currently not implemented</p></li>
+</ul>
+
+<h2>Dynamic Asset files</h2>
+<p>It is possible to to use php files to create asset files therefore making use 
+of dynamic data. If you do want to use a php file as an asset file you must make 
+sure it is formed correctly otherwise when trying to load the page the site will fail.</p>
+<p>Example of a PHP CSS asset file</p>
+<code>
+&lt;?php<br />
+&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Only&nbsp;include&nbsp;header&nbsp;if&nbsp;we&nbsp;are&nbsp;not&nbsp;processing&nbsp;the&nbsp;file&nbsp;for&nbsp;the&nbsp;cache<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<dfn>if(&nbsp;!&nbsp;isset($cache_output))<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;header('content-type:text/css');</dfn><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Rest&nbsp;of&nbsp;php&nbsp;code&nbsp;to&nbsp;create&nbsp;asset&nbsp;file&nbsp;goes&nbsp;here<br />
+?&gt;&nbsp;                                                   
+</code>
+<p>As you will see above, the first 4 lines have a condition statement on whether 
+to include information about the file type. What this code does is it only includes 
+the header information if the page is not being cached. The reason for this, is when 
+the cache is created it is done by including each file. Trying to change the header part way 
+through this process corrupts the cache and the website. Therefore the need for this check.</p>
+
+<h2>Page Class Function Reference</h2>
+
+<a name="set_asset"></a>
+<h3>$this-&gt;page-&gt;set_asset()</h3>
+<p>Load an asset file:</p>
+<code>$this-&gt;page-&gt;set_asset('<var>shared/admin/public</var>','<var>css/js</var>','<var>filename</var>')</code>
+<p>Allows you to specify an asset file to be loaded just for that controller. Please 
+note any assets loaded through this method will not be cached.</p>
+<p>The first parameter specifys what type of asset you want to load.</p> 
+<p>The second parameter is if the asset is a javascript file or a css style sheet.</p>
+<p>The third parameter is the filename of the asset, including the extension. Please 
+note you can use <var>.php</var> files since they are executed before inclusion. Please 
+see <a href="#asset_caching">Asset Caching</a> above for more information.</p>
+
+<a name="set_variable"></a>
+<h3>$this-&gt;page-&gt;set_variable()</h3>
+<p>Specify a variable for conversion:</p>
+<code>$this-&gt;page-&gt;set_variable('<var>name</var>',<var>value</var>)</code>
+<p>Converts a PHP variable into a javascript variable.</p> 
+<p>The first parameter is the name you want the javascript variable to be called.</p> 
+<p>The second parameter is the value you want to convert. You can specify any of
+the following: <kbd>string</kbd>, <kbd>integer</kbd>, <kbd>boolean</kbd>, <kbd>null</kbd>,
+<kbd>non-associative nested array</kbd>.</p>
+
+<a name="set_js"></a>
+<h3>$this-&gt;page-&gt;set_js()</h3>
+<p>Add Javascript Code to Page</p>
+<code>$this-&gt;page-&gt;set_js('<var>string</var>')</code>
+<p>Allows a javascript string to be prepended to the final page. Any string
+entered will be surrounded by &lt;script...&gt; HTML tags.</p>
+<code>
+$this-&gt;page-&gt;set_js('alert("Hello World");');<br />
+<br />
+Will be outputed as<br />
+<br />
+&lt;script type="text/javascript"&gt;<br />
+&lt;!--<br />
+alert("Hello World");<br />
+// --&gt;<br />
+&lt;/script&gt;
+</code>
+
+<a name="output_js"></a>
+<h3>$this-&gt;page-&gt;output_js()</h3>
+<p>Output Javascript Code to Page</p>
+<code>$this-&gt;page-&gt;output_js()</code>
+<p>Outputs any javascript set using <dfn>$this-&gt;page-&gt;set_js(...)</dfn> to the page.
+<p class="important"><strong>Note:</strong> By default in the BackendPro views, the order in which things are outputed are: JS variables/Assets/JS Code</p>
+
+<a name="set_crumb"></a>
+<h3>$this-&gt;page-&gt;set_crumb()</h3>
+<p>Create breadcrumb</p>
+<code>$this-&gt;page-&gt;set_crumb('<var>name</var>','<var>link</var>')</code>
+<p>Create a new crumb in the breadcrumb trail for this controller. The <var>link</var>
+should be in the form used by the rest of CodeIgniter, i.e. <kbd>controller/method</kbd></p>
+
+<a name="set_metatag"></a>
+<h3>$this-&gt;page-&gt;set_metatag()</h3>
+<p>Create meta tag:</p>
+<code>$this-&gt;page-&gt;set_metatag('<var>name</var>','<var>content</var>',<var>TRUE/FALSE</var>)</code>
+<p>The first parameter is the name of the tag e.g keywords, description</p>
+<p>The second parameter is the content of the meta tag e.g 'text/html; charset=utf-8'</p>
+<p>The third <strong>optional</strong> parameter is a <strong>boolean</strong> to set whether
+the tag is the default 'name' or 'http-equiv' version. By default it is set to <kbd>false</kbd> ('name' tag type)</p>
+<code>
+$this-&gt;page-&gt;set_metatag('author','John Doe');<br />
+// Creates the following&lt;br&gt;
+// &lt;meta name="author" content="John Doe" /&gt;<br />
+<br />
+$this-&gt;page-&gt;set_metatag('content-type','text/html; charset=utf-8',TRUE);<br />
+// Creates the following<br />
+// &lt;meta http-eqiv="content-type" content="text/html; charset=utf-8" /&gt;
+</code>
+<p>It is advised to set base meta tags (i.e. ones to be used throughout the site)
+in the MY_Controller.php file, in the required classes.</p>
+<p>Setting two identical meta tags (i.e the same name) will cause for the second 
+to be displayed, due to it overwriting the initial value.</p>
+
+<a name="output_variables"></a>
+<h3>$this-&gt;page-&gt;output_variables()</h3>
+<p>Output javascript variables:</p>
+<code>$this-&gt;page-&gt;output_variables(<var>TRUE/FALSE</var>)</code>
+<p>The first <strong>optional</strong> parameter specifys if the HTML should be 
+printed or returned. The default behaviour is <kbd>true</kbd> (boolean), the output will be printed, 
+if set to <kbd>false</kbd> (boolean) the output will be returned.</p>
+
+<a name="output_metatags"></a>
+<h3>$this-&gt;page-&gt;output_metatags()</h3>
+<p>Output meta tags:</p>
+<code>$this-&gt;page-&gt;output_metatags(<var>TRUE/FALSE</var>)</code>
+<p>The first <strong>optional</strong> parameter specifys if the HTML should be 
+printed or returned. The default behaviour is <kbd>true</kbd> (boolean), the output will be printed, 
+if set to <kbd>false</kbd> (boolean) the output will be returned.</p>
+
+<a name="output_breadcrumb"></a>
+<h3>$this-&gt;page-&gt;output_breadcrumb()</h3>
+<p>Output breadcrumb trail:</p>
+<code>$this-&gt;page-&gt;output_breadcrumb(<var>TRUE/FALSE</var>)</code>
+<p>Creates breadcrumb trail HTML. An example of the code created:</p> 
+<code>
+&lt;a href=&quot;first-link&quot; title=&quot;First Crumb&quot;&gt;First Crumb&lt;/a&gt; &#187;
+&lt;a href=&quot;second-link&quot; title=&quot;Second Crumb&quot;&gt;Second Crumb&lt;/a&gt; &#187;
+Third Crumb
+</code>
+<p>The first <strong>optional</strong> parameter specifys if the HTML should be 
+printed or returned. The default behaviour is <kbd>true</kbd> (boolean), the output will be printed, 
+if set to <kbd>false</kbd> (boolean) the output will be returned.</p>
+
+<a name="output_assets"></a>
+<h3>$this-&gt;page-&gt;output_assets()</h3>
+<p>Output assets:</p>
+<code>$this-&gt;page-&gt;output_assets('<var>admin/public</var>',<var>TRUE/FALSE</var>)</code>
+<p>Creates HTML code to include asset files into view file. An example of the code created:</p>
+<code>
+&lt;script&nbsp;type=&quot;text/javascript&quot;&nbsp;src=&quot;http://localhost/backendpro/assets/shared/js/jquery.js&quot;&gt;&lt;/script&gt;<br />
+&lt;link&nbsp;rel=&quot;stylesheet&quot;&nbsp;type=&quot;text/css&quot;&nbsp;href=&quot;http://localhost/backendpro/assets/shared/css/reset.css&quot;&nbsp;/&gt;<br />
+&lt;link&nbsp;rel=&quot;stylesheet&quot;&nbsp;type=&quot;text/css&quot;&nbsp;href=&quot;http://localhost/backendpro/assets/shared/css/typography.css&quot;&nbsp;/&gt;<br />
+&lt;link&nbsp;rel=&quot;stylesheet&quot;&nbsp;type=&quot;text/css&quot;&nbsp;href=&quot;http://localhost/backendpro/assets/admin/css/style.css&quot;&nbsp;/&gt;
+</code>
+<p>The first parameter specifies which asset area should be outputted. This allows either the public or
+administration assets to be chosen between.</p> 
+<p>The second <strong>optional</strong> parameter specifys if the HTML should be 
+printed or returned. The default behaviour is <kbd>true</kbd> (boolean), the output will be printed, 
+if set to <kbd>false</kbd> (boolean) the output will be returned.</p>
+
+<p class="important"><strong>Important:</strong> Assets are outputted to the page in a specific order.<br/>
+&nbsp;&nbsp;Shared Javascript Files<br/>
+&nbsp;&nbsp;Shared CSS Files<br/>
+&nbsp;&nbsp;Shared Conditional CSS Files<br/>
+THEN EITHER<br/>
+&nbsp;&nbsp;Admin Javascript Files<br/>
+&nbsp;&nbsp;Admin CSS Files<br/>
+&nbsp;&nbsp;Admin Conditional CSS Files<br/>
+OR<br/>
+&nbsp;&nbsp;Public Javascript Files<br/>
+&nbsp;&nbsp;Public CSS Files<br/>
+&nbsp;&nbsp;Public Conditional CSS Files<br/>
+Depending on what string you specify as the first parameter to the function call.
+</p>
+
+<a name="icon"></a>
+<h3>$this-&gt;page-&gt;icon()</h3>
+<p>Display Icon</p>
+<code>$this-&gt;page-&gt;icon('<var>name</var>','<var>title</var>')</code>
+<p>Return an <dfn>&lt;image&gt;</dfn> tag to display the requested icon. Where <var>name</var> can be any icon file in
+<var>assets/shared/icons</var> excluding the <kbd>.png</kbd> file extension.</p>  
+<p>The second <strong>optional</strong> parameter specifys a title to set for the image. 
+This is normaly displayed upon a mouse hover.</p>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

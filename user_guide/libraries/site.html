@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Site Library</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;    
+Site Library
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Site Library</h1>
+<p>The site library replaces the old deprecated Page class. It has the same features as 
+the old Page class apart from it contains no asset related code. This can be found in 
+the new <a href="assets.html">Asset Library</a>.</p>
+<p class="important"><strong>Important:</strong>&nbsp; This class is initialized automatically by the system so there is no need to do it manually.</p
+    
+<p>Features:</p>
+<ul>
+    <li><a href="#set_crumb">Breadcrumb trail creation</a></li>
+    <li><a href="#set_variable">PHP to JS variable conversion</a></li>
+    <li><a href="#set_metatag">Meta tag creation</a></li>
+	<li><a href="#set_js_block">Javascript code blocks</a></li>
+</ul>
+
+<h2>How to use the Site Library?</h2>
+<p>The site library is loaded by default by the BackendPro Class. The class file can be found at <var>modules/site/libraries/bep_site.php</var></p>
+
+<p>To access a method in the Site library please using the following syntax:</p>
+<code>
+	$this-&gt;bep_site-&gt;{method_name};
+</code>
+
+<h2>Configuration Settings</h2>
+<p>All configuration settings for the Site library can be found in <var>modules/site/config/bep_site.php</var>.</p>
+
+<table cellpadding="0" cellspacing="1" border="0" style="width:100%" class="tableborder">
+<tr>
+    <th>Preference</th>
+    <th>Default&nbsp;Value</th>
+    <th>Options</th>
+    <th>Description</th>    
+</tr>
+<tr>
+    <td class="td"><strong>default_site_variables</strong></td>
+    <td class="td">Array</td>
+    <td class="td">None</td>
+    <td class="td">Default PHP values to convert to JS variables</td>
+</tr>
+</table>
+
+<h2>Methods</h2>
+
+<a name="set_metatag"></a>
+<h3>$this-&gt;bep_site-&gt;set_metatag()</h3>
+<p>Set a metatag to be created and stored until the page is outputted.</p>
+<code>
+	$this-&gt;bep_site-&gt;set_metatag('<var>tag name</var>','<var>tag content</var>');<br/>
+	<br/>
+	// Produces : &lt;meta name='tag name' content='tag content'/&gt;
+</code>
+<ul>
+	<li>The first parameter is the name of the meta tag you want to create.</li>
+	<li>The second parameter is the content you want to store in the metatag.</li>
+	<li>The third <strong>optional</strong> parameter sets whether a http-equiv metatag should be created.</li>
+</ul>
+<code>
+	$this-&gt;bep_site-&gt;set_metatag('tag name','tag content',<kbd>true</kbd>);<br/>
+	<br/>
+	// Produces : &lt;meta http-equiv='tag name' content='tag content'/&gt;
+</code>
+
+<a name="get_metatags"></a>
+<h3>$this-&gt;bep_site-&gt;get_metatags();</h3>
+<p>Get an HTML string containing all metatags currently added.</p>
+
+<a name="set_crumb"></a>
+<h3>$this-&gt;bep_site-&gt;set_crumb()</h3>
+<p>Set a new crumb in the breadcrumb trail.</p>
+<code>
+	$this-&gt;bep_site-&gt;set_crumb('<var>name</var>','<var>uri string</var>');
+</code>
+<ul>
+	<li>The first parameter is the name of the crumb link you want to display.</li>
+	<li>The second <strong>optional</strong> parameter is a CodeIgniter URI string for the link. This should be in the form used by
+	the rest of CodeIgniter, i.e. <dfn>controller/method</dfn>.</li>
+</ul>
+
+<a name="get_breadcrumb"></a>
+<h3>$this-&gt;bep_site-&gt;get_breadcrumb()</h3>
+<p>Gets the full breadcrumb trail created up till this point.</p>
+<code>
+	$this-&gt;bep_site-&gt;get_breadcrumb();
+</code>
+<p>So an example of the full use of the breadcrumb trail code is below:</p>
+<code>
+	$this-&gt;bep_site-&gt;set_crumb('BackendPro','');<br/>
+	$this-&gt;bep_site-&gt;set_crumb('Control Panel','admin');<br/>
+	$this-&gt;bep_site-&gt;set_crumb('Members','admin/members');<br/>
+	<br/>
+	print $this-&gt;bep_site-&gt;get_breadcrumb();<br/>
+	<br/>
+	// Produces:<br/>
+	// &lt;a href="http://localhost/index.php"&gt;BackendPro&lt;/a&gt; &gt; &lt;a href="http://localhost/index.php/admin"&gt;Control Panel&lt;/a&gt; &gt; Members<br/>
+</code>
+
+<a name="set_variable"></a>
+<h3>$this-&gt;bep_site-&gt;set_variable()</h3>
+<p>Allows a PHP variable to be converted into a JS variable.</p>
+<code>
+	$this-&gt;bep_site-&gt;set_variable('<var>name</var>',<var>value</var>);	
+</code>
+<ul>
+	<li>The first parameter is the name you want to the JS variable to have.</li>
+	<li>The second parameter is the value you want to assigned to the variable, any of the following PHP variables types can be converted:
+		<ul>
+			<li>Bool</li>
+			<li>Int/Double</li>
+			<li>String</li>
+			<li>Array (Only arrays with numeric keys)</li>
+		</ul>
+	</li>
+</ul>
+<p>It can also handle arrays nested inside arrays or bools in arrays. Most combinations can be converted to there
+equivalent JS version. If a value type cannot be determined then a JS <dfn>null</dfn> value will be used.</p>
+
+<a name="get_variables"></a>
+<h3>$this-&gt;bep_site-&gt;get_variables()</h3>
+<p>Gets an HTML string containing the JS code with the converted variables values.</p>
+<code>
+	$this-&gt;bep_site-&gt;get_variables();
+</code>
+
+<a name="set_js_block"></a>
+<h3>$this-&gt;bep_site-&gt;set_js_block()</h3>
+<p>Set a JS code block so it can be included in the page header upon output.</p>
+<code>
+	$this-&gt;bep_site-&gt;set_js_block('<var>JS code</var>');
+</code>
+<p>This can be very useful if you need to create some dynamic JS on the fly and can't store it
+in a asset file. Please note the code block will not be cached and you will still need to 
+load any assets it may use.</p>
+
+<a name="get_js_blocks"></a>
+<h3>$this-&gt;bep_site-&gt;get_js_blocks()</h3>
+<p>Get an HTML string containing all JS code blocks inside a &ltscript&gt; tag.</p>
+<code>
+	$this-&gt;bep_site-&gt;get_js_blocks();
+</code>
+</div>
+<!-- END CONTENT -->
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

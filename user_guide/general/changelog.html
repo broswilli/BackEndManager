@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Change Log</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' />
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;  
+Change Log
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Change Log</h1>
+
+<h2>Version 0.6.1</h2>
+<p>Release Date: 12th August 2009<br />
+SVN Revision:  <a href="http://code.assembla.com/backendpro/subversion/changesets/257">[257]</a></p>
+<h3>Libraries</h3>
+<ul>
+	<li>Moved the <b>Admin_Controller</b> and <b>Public_Controller</b> to their own seperate files. 
+	This keeps it so there is 1 class per file. See  <a href="http://www.assembla.com/spaces/backendpro/tickets/99">Enhancement #99</a>.
+</ul>
+<h3>Models</h3>
+<ul>
+	<li>Stopped the preference model from making multiple queries to the DB whenever a preference was fetched. Now they are 
+	all fetched and cached. See  <a href="http://www.assembla.com/spaces/backendpro/tickets/135">Enhancement #135</a>.
+</ul>
+<h3>Bugs</h3>
+<ul>
+	<li>Fixed a bug saying Bep_assets could not find an asset file when attempting to create an asset cache. See  <a href="http://www.assembla.com/spaces/backendpro/tickets/134">Bug #134</a>.
+	<li>Fixed bugs in the install process where files where not being checked if they where really writeable. See  <a href="http://www.assembla.com/spaces/backendpro/tickets/133">Bug #133</a>.
+	<li>Fixed a bug where it would report <strong>Cannot load library: bep_site</strong>. See  <a href="http://www.assembla.com/spaces/backendpro/tickets/132">Bug #132</a>.</li>
+</ul>
+
+<h2>Version 0.6</h2>
+<p>Release Date: 16th July 2009<br />
+SVN Revision:  <a href="http://code.assembla.com/backendpro/subversion/changesets/244">[244]</a></p>
+<h3>Features</h3>
+<ul>
+	<li>Turned back on the feature to enable Page debug in the system settings panel.</li>
+	<li><kbd>The website maintenance mode option has been removed</kbd>. This is due to the fact that putting the website 
+	in maintenance mode still required a fully working BeP site with DB (which may not be the case if real maintenance 
+	was being done). See <a href="http://www.assembla.com/spaces/backendpro/tickets/114">Task #114</a>.</li>
+</ul>
+<h3>Libraries</h3>
+<ul>
+	<li>Added a new Site &amp; Assets library. These two new libraries take over the role of the single 
+	now <strong>deprecated</strong> Page library. They implement a new asset management system 
+	with added features.</li>
+</ul>
+<h3>Bugs</h3>
+<ul>
+	<li>Upgrade the use of <dfn>$this-&gt;db-&gt;trans_start()</dfn> to <dfn>$this-&gt;db-&gt;trans_begin()</dfn> in all BackendPro 
+	classes since this is what the CI user guide suggests. See <a href="http://www.assembla.com/spaces/backendpro/tickets/108">Bug #108</a></li>
+	<li>Corrected an issue where the install process was using the old asset files. See <a href="http://www.assembla.com/spaces/backendpro/tickets/124">Bug #124</a></li>
+	<li>Fixed a bug where upon install the CI base_url was incorrect due to an extra trailing slash. See <a href="http://www.assembla.com/spaces/backendpro/tickets/67">Bug #67</a></li>
+</ul>
+  
+<h2>Version 0.5.1</h2>
+<p>Release Date: 23rd May 2009<br />
+SVN Revision:  <a href="http://trac2.assembla.com/backendpro/browser/trunk?rev=232">[232]</a></p>
+<h3>Bug Fixes</h3>
+<ul>
+	<li>Fixed a major security issue where if you had both Username &amp; Email as valid login fields. Entering just a valid email would log you into the system, <a href="http://trac2.assembla.com/backendpro/ticket/106">Bug #106</a></li>
+	<li>Corrected a typo in the userguide on the Image Controller page, <a href="http://trac2.assembla.com/backendpro/ticket/103">Bug #103</a></li>
+</ul>
+  
+<h2>Version 0.5</h2>
+<p>Release Date: 21st March 2009<br />
+SVN Revision: <a href="http://trac2.assembla.com/backendpro/browser/trunk?rev=225">[225]</a></p>
+<h3>Additions</h3>
+<ul>
+	<li>Added a section into the user guide to talk about the file system and matchbox, See <a href="http://trac2.assembla.com/backendpro/ticket/10">Enhancement #10</a></li>
+	<li>JS Code Output - The Page class now has the feature to <a href="../features/page.html#set_js">store JS code</a> and then output it into a view (very much like the PHP to JS variable converter), See <a href="http://trac2.assembla.com/backendpro/ticket/84">Enhancement #84</a>
+	<li>i18n Support - The status class language strings are now contained within a language file, See <a href="http://trac2.assembla.com/backendpro/ticket/75">Enhancement #75</a></li>
+	<li>CI Profiler Intergration - The CI profiler is now intergrated into the admin control panel. When turned on in the <a href="../features/preferences.html#page_debug">system settings</a> rather than some of the output being hidden it is now clearly visible, See <a href="http://trac2.assembla.com/backendpro/ticket/41">Enhancement #41</a></li>
+	<li>Login Selection - It is now possible to select how a user can login, either with their email, username or either.</li>
+</ul>
+<h3>Modifications</h3>
+<ul>
+	<li>The <a href="../features/page.html#icon">page->icon()</a> method now accepts a title paramter for the displayed image.</li>
+	<li>Moved some of the dashboard files into their own module to tidy the file system up a bit. Also have created a new class to store to Statistics Widget creation code it.</li>
+	<li>Improved the <dfn>is_user()</dfn> method so if <dfn>$config['sess_use_database']</dfn> is <var>FALSE</var> then extra user checks are performed. For this to work the value returned by validateLogin() has changed, See <a href="http://trac2.assembla.com/backendpro/ticket/80">Enhancement #80</a></li>
+	<li>Removed PHP short tags from files, See <a href="http://trac2.assembla.com/backendpro/ticket/42">Task #42</a></li>
+	<li>Added some extra language strings for the dropdown options inside <var>application/controllers/admin/settings.php</var>, See <a href="http://trac2.assembla.com/backendpro/ticket/73">Enhancement #73</a></li>
+	<li>Updated the Page Module so it uses the functions in the <a href="http://codeigniter.com/user_guide/helpers/html_helper.html">CodeIgniter HTML helper</a>, See <a href="http://trac2.assembla.com/backendpro/ticket/36">Enhancement #36</a></li>
+	<li>Changed the MY_Controller so the charset header and metatag value is taken from the CI config file, See <a href="http://trac2.assembla.com/backendpro/ticket/74">Enhancement #74</a></li>
+	<li>Altered the default dashboard statistics panel so it now also shows the current CodeIgniter version.</li>
+	<li>Changed the way the install process is done. Now you can specify your CI folder structure, See <a href="http://trac2.assembla.com/backendpro/ticket/53">Enhancement #53</a></li>
+</ul>
+<h3>Bug Fixes</h3>
+<ul>
+	<li>The dashboard widget system now restores moved widgets, See <a href="http://trac2.assembla.com/backendpro/ticket/64">Bug #64</a></li>
+	<li>The BackendPro tree menu in the admin panel now saves its open/closes status rather than it being lost between different pages, See Bugs <a href="http://trac2.assembla.com/backendpro/ticket/15">#15</a> and <a href="http://trac2.assembla.com/backendpro/ticket/45">#145</a></li>
+	<li>Redirection upon login is now fixed, See <a href="http://trac2.assembla.com/backendpro/ticket/100">Bug #100</a></li>
+	<li>Spelling errors throughout the code, See Bugs <a href="http://trac2.assembla.com/backendpro/ticket/71">#71</a>, <a href="http://trac2.assembla.com/backendpro/ticket/76">#76</a>, <a href="http://trac2.assembla.com/backendpro/ticket/77">#77</a></li>
+	<li>Corrected the user guide section on the <a href="../features/page.html#output_breadcrumb">Page</a> class. Originally it listed <strong>output_trail()</strong> as a method this is now <strong>output_breadcrumb</strong>, See <a href="http://trac2.assembla.com/backendpro/ticket/69">Bug #69</a></li>
+	<li>Modified the path to the user guide from inside the <strong>BackendPro</strong> control panel (footer), See <a href="http://trac2.assembla.com/backendpro/ticket/68">Bug #68</a></li>
+</ul>
+  
+<h2>Version 0.4</h2>
+<p>Release Date: 13th Dec 2008<br />
+SVN Revision: <a href="http://trac2.assembla.com/backendpro/browser/trunk?rev=177">[177]</a></p>
+<h3>Additions</h3>
+<ul>
+	<li>Added a new readonly style for the forms. Now if a form input is readonly add the class <strong>readonly</strong> to it to display a greyed out look. See <a href="http://trac2.assembla.com/backendpro/ticket/44">Enhancement #44</a></li>
+	<li>Added the new <a href="../features/image_controller.html">Image controller</a> which allows images to be loaded dynamically.</li>
+	<li>Added a new <a href="../features/views.html#popup_container">Popup Container</a> which allows a popup window to be created with all the advantages of the <strong>BackendPro</strong> system, but without the navigation/footer/header.</li>
+	<li>A new and improved install script. It now performs system checks (e.g log folder writable) and gives detailed information on the process.</li>
+	<li>New documentation in the user guide about the process of upgrading versions of <strong>BackendPro</strong></li>
+</ul>
+<h3>Modifications</h3>
+<ul>
+	<li>Removed the BackendPro class and instead incoperated the library loading code into the Site_Controller class.</li>
+	<li>Moved the welcome controller and view to its own module so its easy for the user to delete.</li>
+	<li>Fixed some spelling errors both in the user guide and in the code.</li>
+	<li>Removed the webmaster name/email preferences since these seemed old fashioned and also were not used by the base system.</li>
+</ul>
+<h3>Bug Fixes</h3>
+<ul>
+	<li>Fixed a bug where you couldn't change a permission allow status, i.e. from Allow to Deny, See <a href="http://trac2.assembla.com/backendpro/ticket/54">Bug #54</a></li>
+	<li>Fixed a bug where a "deprecated" warning is thrown when using pass by reference in php 5 in resource.php view, See <a href="http://trac2.assembla.com/backendpro/ticket/55">Bug #55</a></li>
+	<li>Fixed a bug where you couldn't have ACL actions with a space in the name, this caused problems when trying to assign them to a permission, See <a href="http://trac2.assembla.com/backendpro/ticket/57">Bug #57</a></li>
+	<li>Fixed a bug where when modifying a permission, instead of saving it, it created a new permission, See <a href="http://trac2.assembla.com/backendpro/ticket/20">Bug #20</a></li>
+	<li>Fixed a bug where status messages would get repeated if an ajax controller method was called, See <a href="http://trac2.assembla.com/backendpro/ticket/4">Bug #4</a></li>
+	<li>Fixed a bug where if no user profile fields are created but the user profiles are turned on, it would error saying "Must you set method" when trying to save a edited user account, See <a href="http://trac2.assembla.com/backendpro/ticket/51">Bug #51</a></li>
+	<li>Fixed a bug with <strong>unserialize() Spamming logs with errors</strong>, See <a href="http://trac2.assembla.com/backendpro/ticket/37">Bug #37</a></li>
+</ul>
+  
+<h2>Version 0.3.1</h2>
+<p>Release Date: 22nd June, 2008<br />
+SVN Revision: <a href="http://trac2.assembla.com/backendpro/browser?rev=119">119</a></p>
+<h3>Modifications</h3>
+<ul>
+	<li>Added a <kbd>value</kbd> option to <dfn>&lt;button&gt;</dfn> elements so the form can submit.</li>
+</ul>
+  
+<h2>Version 0.3</h2>
+<p>Release Date: 22nd June, 2008<br />
+SVN Revision: <a href="http://trac2.assembla.com/backendpro/browser?rev=116">116</a></p>
+<h3>Additions</h3>
+<ul>
+	<li>Added a <a href="../features/dashboard.html">dashboard</a> to the control panel front page.</li>
+	<li>Added cancel buttons to forms.</li>
+	<li>Added new <a href="../assets/css.html#icon_buttons">CSS styles</a> to create buttons.</li>
+	<li>Added <dfn>icon()</dfn> to <a href="../features/page.html#icon">Page</a> library.</li>
+	<li>Added a generate password feature to the member administration area</li>
+	<li>Added CSS caching using CSS Tidy in the <a href="../features/page.html#asset_caching">Page</a> library.</li>
+	<li>Added <dfn>output_variables()</dfn> to <a href="../features/page.html#output_variables">Page</a> library.</li>
+	<li>Added conditional CSS files in the <a href="../features/page.html#output_assets">Page</a> library.</li>
+	<li>Added meta tag creation into the <a href="../features/page.html#set_metatag">Page</a> library.</li>
+</ul>
+<h3>Modifications</h3>
+<ul>
+	<li>Updated some of the documentation so its simpler to navigate around.</li>
+	<li>Updated <dfn>getUsers()</dfn> in <var>User_model.php</var> to also fetch user profile columns.</li>
+	<li>Changed the version control system from including a date to release candidate, purely to be shorter.</li>
+    <li>Updated <var>Nested_sets_model.php</var> to remove the <dfn>public</dfn> attribute from the constructor</li>
+</ul>
+  
+<h2>Version 0.2 alpha 20080414</h2>
+<p>Release Date: 14th April, 2008</p>
+<ul>
+    <li>Changed the way the view file container was passed from the Controller to the Userlib library. It is now passed as a function parameter instead of by using <dfn>static</dfn> variables which were not PHP4 compatible.</li>
+    <li>Updated the install script to take note of new modules folder from <strong>Version 0.2 alpha 20080413</strong></li>
+    <li>Replaced <dfn>call_user_method_array</dfn> with <dfn>call_user_func_array</dfn> in <var>base_model.php</var> due to original being deprecated.</li> 
+</ul>
+  
+<h2>Version 0.2 alpha 20080413</h2>
+<p>Release Date: 13th April, 2008</p>
+<ul>
+    <li>Replaced the use of <var>static $_container</var> in <var>MY_Controller.php</var> to use <var>var $_container</var>. This was due to <dfn>static</dfn> only being available in PHP5. <strong>Please run a replace command on all your user created files to replace Site_Controller::$_container with $this-&gt;_container to use the new variable naming</strong>.</li>
+    <li>Deprecated <dfn>_generate_random_string()</dfn> in <var>Userlib.php</var> to use CodeIgniters string helper function <a href="http://codeigniter.com/user_guide/helpers/string_helper.html">random_string()</a></li>
+    <li>Updated the admin menu view file so the <dfn>System</dfn> item would have language support</li>
+    <li>Added language support to the <var>application/controllers/admin/settings.php</var> file for defining preference groups</li>
+    <li>Removed passing <var>$obj</var> by reference to passing by argument due to issue if allow_call_time_pass_reference is false in INI file, in <var>modules/auth/models/access_control_model.php</var></li>
+    <li>Moved the <dfn>modules</dfn> folder into the root dir</li>
+</ul>
+  
+<h2>Version 0.2 alpha 20080406</h2>
+<p>Release Date: 6th April, 2008</p>
+<ul> 
+    <li>First publicly released version</li>
+</ul>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

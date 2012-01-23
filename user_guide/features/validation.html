@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Validation Class</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;  
+Validation Class
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Validation Class</h1>
+
+<p>The Validation Class extends the default <a href="http://codeigniter.com/user_guide/libraries/validation.html">CodeIgniter Validation Class</a> by adding 
+some extra callback functions needed by the <strong>BackendPro</strong> system. It also provides
+a way to transfer error messages to use the <a href="status.html">Status Class</a> message system.</p>
+
+<h2>How to use the Validation Class?</h2>
+
+<code>$this-&gt;load-&gt;library('validation');</code>
+<p>The class file can be found at <var>system/application/libraries/MY_Validation.php</var></p>
+
+<h2>Validation Class Function Reference</h2>
+
+<a name="output_errors"></a>
+<h3>$this-&gt;validation-&gt;output_errors()</h3>
+<p>Calling this method will transfer any form error messages into the <a href="status.html">Status Class</a>
+message system.</p>
+
+<a name="set_default_value"></a>
+<h3>$this-&gt;validation-&gt;set_default_value()</h3>
+<p>Set Default Form Field:</p>
+<code>$this-&gt;validation->set_default_value(<var>field</var>,<var>value</var>);</code>
+<p>When used as above it will set the initial <var>value</var> of the specified <var>field</var>. Another method 
+of using this method is to give it an associative array of field names to values.</p>
+<code>
+$data = array('field1' =&gt; 'value1', 'field2' =&gt; 'value2');<br />
+$this-&gt;validation-&gt;set_default_value($data);
+</code>
+
+<p>The main reason for using this method over other ways of setting the default value
+of a form field is this will allow checkboxes and radio buttons to have a default value. 
+The downside of this is on setting the form up for the first time, <strong>you must not</strong> specify 
+any field rules. If you do the form will submit. So an example of how this would be handled
+is below.</p>
+<code>
+function&nbsp;myform()<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$fields&nbsp;=&nbsp;array(.....);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$rules&nbsp;=&nbsp;array(.....);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;validation-&gt;set_fields($fields);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;!&nbsp;$this-&gt;input-&gt;post('submit'))<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;This&nbsp;is&nbsp;the&nbsp;initial&nbsp;form&nbsp;load<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Setup&nbsp;form&nbsp;default&nbsp;values<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$data&nbsp;=&nbsp;array(....);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;validation-&gt;set_default_values($data);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Form&nbsp;submitted<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Validate&nbsp;form&nbsp;input<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;validation-&gt;set_rules($rules);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if($this-&gt;validation-&gt;run()&nbsp;===&nbsp;FALSE)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Validation&nbsp;FAILED<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Display&nbsp;form<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Validation&nbsp;PASSED<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Save&nbsp;form&nbsp;contents<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}
+</code>
+   
+<h2>Callback Functions</h2>
+<p>These are the extra callback functions which can be used in validation rules.</p>
+<table cellpadding="0" cellspacing="1" border="0" style="width:100%" class="tableborder">
+<tr>
+    <th>Rule</th>
+    <th>Parameter</th>
+    <th>Description</th>
+</tr>
+<tr>
+    <td class="td">valid_captcha</td>
+    <td class="td">No</td>
+    <td class="td">Returns FALSE if the form captcha is invalid</td>
+</tr>
+<tr>
+    <td class="td">spare_username</td>
+    <td class="td">No</td>
+    <td class="td">Returns FALSE if the provided string is already in use as a username for another user</td>
+</tr>
+<tr>
+    <td class="td">spare_email</td>
+    <td class="td">No</td>
+    <td class="td">Returns FALSE if the provided email is already in use by another user</td>
+</tr>
+<tr>
+    <td class="td">spare_edit_username</td>
+    <td class="td">No</td>
+    <td class="td">Returns FALSE if the provided string is already in use as a username by another user apart from by the user whos details are being changed. This should be used instead of spare_username when editing a users details.</td>
+</tr>
+<tr>
+    <td class="td">spare_edit_email</td>
+    <td class="td">No</td>
+    <td class="td">Returns FALSE if the provided string is already in use as an email by another user apart from by the user whos details are being changed. This should be used instead of spare_email when editing a users details.</td>
+</tr>
+</table>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

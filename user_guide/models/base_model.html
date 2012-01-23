@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Base Model</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='robots' content='all' /> 
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;   
+Base Model
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="http://www.kaydoo.co.uk/backendpro/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Base Model</h1>
+
+<p>The Base Model Class provides you with basic functions to perform fetches/updates/inserts/deletes 
+on database tables. Instead of having huge model files with different functions for 
+updating each table, you can use a single line. What if that 'default' function 
+doesn't do what you want for a certain table? Well you can overwrite it.</p>
+
+<p class="important"><strong>Important:</strong>&nbsp; This class is initialized automatically by the system so there is no need to do it manually.</p>
+
+<h2>Using the Base Model Class</h2>
+
+<p>The Base Model Class is an abstract class, which means you only use it through 
+extending it. All you need to start using it is with following code:</p>
+
+<code>
+class&nbsp;Custom_model&nbsp;extends&nbsp;<kbd>Base_model</kbd>
+<br />{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;Custom_model()
+<br />&nbsp;&nbsp;&nbsp;&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Call&nbsp;parent&nbsp;constructor
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parent::<kbd>Base_model</kbd>();
+<br />
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Setup&nbsp;tables
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<var>$this-&gt;_TABLES</var>&nbsp;=&nbsp;array(<kbd>'Table</kbd>'&nbsp;=&gt;&nbsp;<kbd>'complex_table_name</kbd>');
+<br />&nbsp;&nbsp;&nbsp;&nbsp;}
+<br />}
+</code>
+<p>From the code you can see the variable <dfn>$this-&gt;_TABLES</dfn> being assigned 
+an array. This defines what table's your model has access to. It also means you can
+assign a nice string to mean a complex table name. So lets see an example of this:</p>
+<code>$this-&gt;custom_model-&gt;fetch(<var>'Table'</var>);</code>
+<p>Here we are doing a default fetch on <var>Table</var>. The advantage of using 
+strings to represent the table name instead of using the actual table name is 
+so you won't have to remember possibly long complex table names.</p>
+
+<p>As said before say you may want to implement further features than the basic functions 
+provide you with. Its possible in your model file to overwrite a certain action for a given 
+table. In the examples below <kbd>table</kbd> would be the table identifier you assigned for a given 
+table in the <dfn>$this-&gt;_TABLES</dfn> class variable.</p>
+<ul>
+<li><dfn>function _fetch_<kbd>table</kbd>(<var>fields</var>,<var>limit</var>,<var>where</var>){...}</dfn></li>
+<li><dfn>function _insert_<kbd>table</kbd>(<var>data</var>){...}</dfn></li>
+<li><dfn>function _update_<kbd>table</kbd>(<var>data</var>,<var>where</var>){...}</dfn></li>
+<li><dfn>function _delete_<kbd>table</kbd>(<var>where</var>){...}</dfn></li>
+</ul>
+<p>To call your newly created method you would just call the method as normal as explained below.</p>
+
+<h2>Function References</h2>
+
+<a name="fetch"></a>
+<h3>$this-&gt;fetch()</h3>
+<p>Fetch table rows:</p>
+<code>$this-&gt;fetch('<var>Table</var>',<var>fields</var>,<var>limit</var>,<var>where</var>)</code>
+<p>The first parameter is the Table string name you assigned in <dfn>$this-&gt;_TABLES</dfn> 
+for the table you wish to query.</p> 
+<p>The second <strong>optional</strong> parameter is the fields you wish returned.</p> 
+<p>The third <strong>optional</strong> parameter is an array defining the limit of
+the query. An example array may be as follows: <kbd>array('rows'=&gt;10,'offset'=&gt;0)</kbd>.</p> 
+<p>The forth <strong>optional</strong> parameter is a where clause for which rows to
+return.</p>
+
+<a name="insert"></a>
+<h3>$this-&gt;insert()</h3>
+<p>Insert table rows:</p>
+<code>$this-&gt;insert('<var>Table</var>',<var>data</var>)</code>
+<p>The first parameter is the Table string name you assigned in <dfn>$this-&gt;_TABLES</dfn> 
+for the table you wish to query.</p> 
+<p>The second parameter is the data array you want to insert into the table.</p> 
+
+<a name="update"></a>
+<h3>$this-&gt;update()</h3>
+<p>Update table rows:</p>
+<code>$this-&gt;update('<var>Table</var>',<var>data</var>,<var>where</var>)</code>
+<p>The first parameter is the Table string name you assigned in <dfn>$this-&gt;_TABLES</dfn> 
+for the table you wish to query.</p> 
+<p>The second parameter is the data array you want to update the table with.</p> 
+<p>The third parameter is a where clause for which rows to update</p>
+
+<a name="delete"></a>
+<h3>$this-&gt;delete()</h3>
+<p>Delete table rows:</p>
+<code>$this-&gt;Delete('<var>Table</var>',<var>where</var>)</code>
+<p>The first parameter is the Table string name you assigned in <dfn>$this-&gt;_TABLES</dfn> 
+for the table you wish to query.</p> 
+<p>The second parameter is a where clause for which rows to delete.</p>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>

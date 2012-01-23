@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>BackendPro User Guide : Dashboard</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+
+</head>
+
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>BackendPro User Guide Version 0.6.1</h1></td>
+<td id="breadcrumb_right"><a href="../contents.html">Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;    
+Dashboard
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="example.com/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+<h1>Dashboard</h1>
+
+<p><strong>BackendPro</strong> provides a customizable dashboard for the control panel. This means you can
+quickly display important information the the users. It allows widgets to be created and assigned to a section 
+on the dashboard. By default the user can then modify the look of the dashboard by moving widgets around and 
+also by choosing not to display certain widgets.</p>
+
+<p>The dashboard feature is controlled from <var>system/application/controllers/admin/home.php</var> controller class.
+In this controller you define what widgets you want to show and what they should contain. For the controller to be able to create and 
+display a dashboard it requires two classes:</p>
+<ul>
+	<li><a href="#dashboard">Dashboard Class</a></li>
+	<li><a href="#widget">Widget Class</a></li>
+</ul>
+
+<p>Lets have a look at the default code in the <var>Home</var> class:</p>
+
+<code>
+function&nbsp;index()<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;// <var>1</var> &nbsp;Include&nbsp;dashboard&nbsp;Javascript&nbsp;code<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$this->page->set_asset('admin','js','dashboard.js');<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;// <var>2</var> &nbsp;Load&nbsp;the&nbsp;dashboard&nbsp;library<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$this->load->module_library('dashboard','dashboard');<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;// <var>3</var> &nbsp;Load&nbsp;any&nbsp;widget&nbsp;libraries<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$this->load->module_library('dashboard','Statistic_widget');<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;// <var>4</var> &nbsp;Assign&nbsp;widgets&nbsp;to&nbsp;dashboard<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$this->dashboard->assign_widget(new&nbsp;widget($this->lang->line('dashboard_example'),$this->lang->line('dashboard_example_body')),'left');<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$this->dashboard->assign_widget(new&nbsp;widget($this->lang->line('dashboard_statistics'),$this->statistic_widget->create()),'right');<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;// <var>5</var> &nbsp;Load&nbsp;dashboard&nbsp;onto&nbsp;page<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$data['dashboard']&nbsp;=&nbsp;$this->dashboard->output();<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Display&nbsp;Page<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$data['header']&nbsp;=&nbsp;$this->lang->line('backendpro_dashboard');<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$data['page']&nbsp;=&nbsp;$this->config->item('backendpro_template_admin')&nbsp;.&nbsp;"home";<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$this->load->view($this->_container,$data);<br />
+}
+</code>
+
+<p>As you can see from above this controller looks exactly like any other. Some library is called and an output is given.
+So lets step through the main four sections of this code.</p>
+<ol>
+	<li>This little section includes the <var>dashboard.js</var> javascript file which is used
+	to allow the user to modify the dashboard how they want.</li>
+	
+	<li>The next section loads the required libraries I talked about earlier, and creates an instance 
+	of the <a href="#dashboard">Dashboard class</a>, storing it in <dfn>$this-&gt;dashboard</dfn>.</li>
+	
+	<li>Here we load any widget classes. These basicly contain code to create the view for the widget.
+	The advantage of having them in their own classes is to improve code readability. Please see <dfn>modules/dashboard/libraries/Statistics_widget.php</dfn>
+	for an example. I would advise creating a similar class for every widget.</li>
+	
+	<li>This section is where I create and assign widgets to the dashboard. As you can see two widgets are created 
+	and assigned to the dashboard object.</li>
+	
+	<li>This last section generates the dashboard code.</li>
+</ol>
+
+<h2>Guarding a Widget</h2>
+
+<p>You may find a time when you only want a widget to be displayed if the user has permission to view the required data. 
+This can be achieved through using the <a href="acl.html">Access Control</a> feature. Lets take a look at how this may be done:</p>
+
+<code>
+if(&nbsp;<dfn>check</dfn>('<kbd>member_widget</kbd>',NULL,<kbd>FALSE</kbd>))<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;dashboard-&gt;assign_widget(new&nbsp;Widget('Members','Content'),'left');
+</code>
+
+<p>So in the example above we have used the <dfn>check</dfn> helper function to see if the user has access to the resource 
+<kbd>member_widget</kbd>. By specifying the last parameter of the call 
+to <dfn>check</dfn> as <kbd>FALSE</kbd> it means it will just return a boolean result instead of possibly redirecting
+the user to an error page (Please see the <a href="acl.html">Access Control</a> feature for more details about this). 
+If the user does pass this test, the widget will be created and assigned to the dashboard.</p>
+
+<a name="dashboard"></a>
+<h1>Dashboard Class</h1>
+
+<p>The Dashboard class allows a dashboard object to be created and have widgets assigned to it. It can then generate all 
+the required HTML code to display the dashboard to the user.</p>
+
+<p class="important"><strong>Note</strong>: Widgets are assigned to the sections in the order you create them in the controller. 
+So a widget assigned before another will appear above the later widget. Of course this is only the default setup. The 
+user may change the order for their personal viewing.</p>
+
+<h2>Dashboard Class Function Reference</h2>
+
+<h3>$this-&gt;dashboard-&gt;assign_widget();</h3>
+<p>Assign a widget to a position on the dashboard:</p>
+
+<code>
+$this-&gt;dashboard-&gt;assign_widget(<dfn>Widget Object</dfn>,'<var>position</var>');
+</code>
+
+<p>The first parameter is a <a href="#widget">Widget Class Object</a>. Please see below for how one of these 
+can be created.</p>
+
+<p>The second parameter is the <var>position</var> where you want the widget to appear by default. It can take 
+the value of <kbd>top</kbd>, <kbd>left</kbd> or <kbd>right</kbd>.</p>
+
+
+
+<a name="widget"></a>
+<h1>Widget Class</h1>
+
+<p>The Widget class allows a widget to be created and then when needed its HTML code created. There is not much
+use using the Widget class on its own, it is for that reason meant to be used in conjunction 
+with the <a href="#dashboard">Dashboard</a> class.</p>
+
+<h2>Using the class</h2>
+
+<p>You only need to know how to create a widget object to use the Widget class, 
+since the <a href="#dashboard">Dashboard</a> class takes care of everything else.</p>
+
+<p>Lets look at an example:</p>
+<code>
+new&nbsp;Widget('<var>name</var>','<var>content</var>')
+</code>
+
+<p>In the example above as you can see a new Widget object being declared and its <var>name</var> and <var>content</var>
+being passed as parameters. Thats all you need to know.</p>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>
+</p>
+<p><a href="http://www.kaydoo.co.uk/projects/backendpro">BackendPro</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://www.kaydoo.co.uk">Adam Price</a></p>
+
+</div>
+
+</body>
+</html>
